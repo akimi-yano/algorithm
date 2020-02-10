@@ -41,9 +41,24 @@ def hanoi(towers, n, source, destination, temp):
     destination: the position in towers to move the rings to
     temp: temporary position in towers
     """
-    pass
+    if n == 1:
+        print(f"hanoi(n={n}) Moving ring...\n" + towers_str(towers))
+        ring = towers[source].pop()
+        towers[destination].append(ring)
+        print(f"hanoi(n={n}) Moved ring...\n" + towers_str(towers))
+        return 
+    else:
+        hanoi(towers, n-1, source, temp, destination)
+        print(f"hanoi(n={n}) Moving ring...\n" + towers_str(towers))
+        ring = towers[source].pop()
+        towers[destination].append(ring)
+        print(f"hanoi(n={n}) Moved ring...\n" + towers_str(towers))
+        hanoi(towers, n-1, temp, destination, source)
 
-towers = [[3, 2, 1], [], []]
+
+# NEVER DO OVER 10!!!!
+tower_size = 3
+towers = [[i for i in range(tower_size, 0, -1)], [], []]
 print("Before moving:\n" + towers_str(towers))
-hanoi(towers, 3, 0, 1, 2)
+hanoi(towers, tower_size, 0, 1, 2)
 print("After moving:\n" + towers_str(towers))
