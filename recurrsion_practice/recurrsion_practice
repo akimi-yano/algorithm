@@ -1,0 +1,40 @@
+// solution1
+// better to have the same data type as return
+// can break the code if the input was just one letter
+
+// const subset = (str, dict={})=>{
+//     if(str.length===0){
+//         return['']
+//     }
+//     if(str.length==1){
+//         dict[str]=true;
+//         return Object.keys(dict);
+        
+//     }
+//     dict[str]=true;
+//     for(let i=0; i<str.length; i++){
+//         subset(str.substring(0,i)+str.substring(i+1,str.length),dict);
+//     }
+//     let arr = Object.keys(dict);
+//     arr.push("")
+//     return arr;
+// }
+
+// console.log(subset("A"))
+
+// solution2
+function subsets(str, sub, arr){
+    if(!sub){sub=''}
+    if(!arr){arr=[]}
+    if(str.length==0){
+        arr.push(sub);
+        return arr
+    }
+    let i = str[0]
+
+    subsets(str.substr(1),sub+i,arr)
+    subsets(str.substr(1),sub,arr)
+    return arr;
+}
+
+console.log(subsets("A"))
