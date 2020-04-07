@@ -34,12 +34,21 @@ class SLL {
         }
         return this;
     }
+    printVals(){
+        let runner = this.head
+        while (runner!= null){
+            console.log(runner.val)
+            runner=runner.next
+        }
+        return this
+    }
 }
 myList = new SLL();
 // myList.addToFront(1).addToFront(2)
 // console.log(myList)
 myList.addArray([1,2,3])
-console.log(myList)
+myList.printVals()
+// console.log(myList)
 
 
 // let newNode = new Node(val);
