@@ -1,4 +1,4 @@
-// Names: Tam Nguyen, Akimi Yano, Bilal Hashim
+
 
 // #1 Compare Queues
 function isEqual(queue1, queue2) {

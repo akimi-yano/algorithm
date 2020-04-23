@@ -170,6 +170,10 @@ class SList {
         }
     return this
 }
+// remove node after a given pointer
+// removeNodeAfter(pointer){
+
+// }
 }
 function getUniques(list1, list2){
     let newList = new SList();
