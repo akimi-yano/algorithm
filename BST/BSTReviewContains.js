@@ -204,22 +204,37 @@ recursiveContains(node = this.root, value){
     return this.recursiveContains(node.left, value)
     }
     }
-    contains(value){
-        let runner = this.root;
-        while (runner.val !== value){
-            if (runner.left!== null || runner.right!== null)
-                if(value<runner.val){
-                    runner = runner.left;
-                }
-                else{runner = runner.right;}
+    // this breaks when value =65 in the tree where there is no 60
+    // contains(value){
+    //     let runner = this.root;
+    //     while (runner.val !== value){
+    //         if (runner.left!== null || runner.right!== null)
+    //             if(value<runner.val){
+    //                 runner = runner.left;
+    //             }
+    //             else{runner = runner.right;}
             
-            else{return false;}
+    //         else{return false;}
+    //     }
+    //     return true;
+    // }
+    contains(value){
+        var runner = this.root;
+        while(runner){
+            if(runner.val === value){
+                return true
+            }else if(runner.val > value){
+                runner = runner.left;
+            }else{
+                runner = runner.right;
+            }
         }
-        return true;
+        return false;
     }
 }
 let tree = new BST();
-tree.insert(66).insert(55).insert(99).insert(44).insert(60);
+tree.insert(66).insert(55).insert(99).insert(44);
+// tree.insert(66).insert(55).insert(99).insert(44).insert(60);
 // console.log("INORDERARR")
 console.log(tree.inorderArr(tree.root))
 // console.log(tree.isEmpty())
@@ -232,4 +247,4 @@ console.log(tree.inorderArr(tree.root))
 // tree.deleteMax()
 // console.log(tree.inorderArr(tree.root))
 // console.log(tree.recursiveContains(tree.root, 60))
-console.log(tree.contains(9))
+console.log(tree.contains(65))

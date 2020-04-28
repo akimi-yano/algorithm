@@ -176,7 +176,8 @@ deleteMin(){
         current = next;
         next = next.left;
     }
-    current.left = null;
+    // current.left = null; will  break if there is children 
+    current.left = next.right;
     return this;
 }
 deleteMax(){
@@ -188,7 +189,8 @@ deleteMax(){
         current = next;
         next = next.right;
     }
-    current.right = null;
+    // current.right = null; will  break if there is children 
+    current.right = next.left;
     return this;
 }
 }
@@ -203,5 +205,5 @@ console.log(tree.getMax())
 // console.log(tree.recursiveGetMax(tree.root))
 tree.deleteMin()
 // console.log(tree.inorderArr(tree.root))
-// tree.deleteMax()
+tree.deleteMax()
 console.log(tree.inorderArr(tree.root))
