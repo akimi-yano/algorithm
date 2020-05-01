@@ -47,6 +47,41 @@ class BinaryNode {
       }
       return current.val;
     }
+    while(runner){
+      if (runner.val === value){
+          if(runner.left === null && runner.right === null){
+              runner = null;
+          }
+          // else if(runner.left  === null){
+          //     runner=runner.right;
+
+          // }
+          // else if (runner.right === null){
+          //     runner=left
+          // }
+          else if( runner.right==null){
+              let max = this.getMax(runner.left);
+              runner.val =max;
+              this.deleteMax(runner.left)
+          }
+          else if(runner.left!== null && runner.right!==null || runner.left === null){
+              let min = this.recursiveGetMin(runner.right);
+              runner.val =min;
+              this.deleteMin(runner.right)
+          }
+      }
+      else if(runner.val < value){
+          runner2 = runner; //make it equal to runner before we move
+          runner = runner.right;
+
+      }
+      else if (runner.val > value){
+          runner2 = runner;
+          runner = runner.left
+          }
+      }
+  return this;
+  }
     remove(target){
       // call remove on the root node
       this.root = this.recursiveRemove(this.root, target);
@@ -111,16 +146,17 @@ class BinaryNode {
     if(current == null){
       return;
     }
-    console.log(current.val);
+    
     InorderTraversal(current.left);
+    console.log(current.val);
     InorderTraversal(current.right);
   }
   let tree = new BST();
   tree.insert(66).insert(55).insert(99).insert(44).insert(50).insert(101).insert(62).insert(75);
-  console.log(tree.height());
-  InorderTraversal(tree.root);
-  tree.remove(66);
-  console.log(tree.height());
+  // console.log(tree.height());
+  // InorderTraversal(tree.root);
+  tree.remove(44);
+  // console.log(tree.height());
   InorderTraversal(tree.root);
   
   

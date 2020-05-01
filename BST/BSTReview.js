@@ -116,6 +116,50 @@ class BST {
 //     }
 
 // }
+getMin(){
+        var runner = this.root;
+
+        if(!runner){
+            return null;
+        }
+
+        while(runner.left){
+            runner = runner.left;
+        }
+
+        return runner.val;
+    }
+
+    getMax(){
+        var runner = this.root;
+
+        if(!runner){
+            return null;
+        }
+
+        while(runner.right){
+            runner = runner.right;
+        }
+
+        return runner.val;
+    }
+
+    recursiveGetMin(node){
+        if(!node) node = this.root;
+
+        if(!node.left) return node.val;
+
+        return this.recursiveGetMin(node.left);
+    }
+
+
+    recursiveGetMax(node){
+        if(!node) node = this.root;
+
+        if(!node.right) return node.val;
+
+        return this.recursiveGetMax(node.right);
+    }
 isEmpty(){
     return this.root===null;
 }
