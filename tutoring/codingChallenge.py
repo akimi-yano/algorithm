@@ -30,6 +30,7 @@ print(findUnique([1,0,0,2,1]))
 # return the correct result given the number N
 
 
+
 #3 you are provided with a string of undetermined length. 
 # it has only uppercase letters (no numbers, no special characters). 
 # figure out how many times the word "BALLOON" can be extracted from the string. return the count.
