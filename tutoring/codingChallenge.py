@@ -22,11 +22,11 @@ print(findUnique([1,0,0,2,1]))
 # 0011 = 3
 
 #2 you are provided with a number N, find the pattern given these examples:
-# if n == 0: return 0
-# if n == 1: return 1
-# if n == 9: return 9
-# if n == 10: return 19
-# if n == 19: return 199
+# if n == 0: return 0 - 
+# if n == 1: return 1 -
+# if n == 9: return 9 - 
+# if n == 10: return 19 - 
+# if n == 19: return 199 - 
 # return the correct result given the number N
 
 
