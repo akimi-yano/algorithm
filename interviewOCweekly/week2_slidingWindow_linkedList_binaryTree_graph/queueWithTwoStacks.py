@@ -1,109 +1,109 @@
-# If we were to ask you to take over a project on Day 1, what would you accomplish in your first week?
+# # If we were to ask you to take over a project on Day 1, what would you accomplish in your first week?
 
-Should take one minute; minute and a half at most
+# Should take one minute; minute and a half at most
 
-##### Prompt
+# ##### Prompt
 
-Say: "If we were to ask you to take over a project on Day 1, what would you accomplish in your first week?"
+# Say: "If we were to ask you to take over a project on Day 1, what would you accomplish in your first week?"
 
-##### Do you hear these things?
+# ##### Do you hear these things?
 
-- *Identify*: Does the interviewee discuss their competencies based on what you have asked them? Competencies include:
-   - Technical Skills (libraries, languages, etc.)
-   - Interpersonal Skills  
-
-
-- *Prove*: Does the interviewee provide a _specific_ example (past experience or hypothetical scenario)  to showcase competencies and/or fit? Is it presented in the form of a story (punchline, beginning, middle, positive end)?
+# - *Identify*: Does the interviewee discuss their competencies based on what you have asked them? Competencies include:
+#    - Technical Skills (libraries, languages, etc.)
+#    - Interpersonal Skills  
 
 
-- *Close*: Does the interviewee showcase why the company should hire them and how their skills/experience/values will add value to and align with the team/company? Does the interviewee showcase what they have learned in "Prove" and how they will apply it to the new role?
+# - *Prove*: Does the interviewee provide a _specific_ example (past experience or hypothetical scenario)  to showcase competencies and/or fit? Is it presented in the form of a story (punchline, beginning, middle, positive end)?
 
-# 210 - Queue with Two Stacks
 
-Implement a `Queue` class using two `stacks`. The `Queue` should have the following methods:
+# - *Close*: Does the interviewee showcase why the company should hire them and how their skills/experience/values will add value to and align with the team/company? Does the interviewee showcase what they have learned in "Prove" and how they will apply it to the new role?
 
-`enqueue`: add an item to the end of the collection
+# # 210 - Queue with Two Stacks
 
-`dequeue`: remove an item from the beginning of the collection
+# Implement a `Queue` class using two `stacks`. The `Queue` should have the following methods:
 
-```
-Input: 		N/A
-Output: 	Queue Class
-```
+# `enqueue`: add an item to the end of the collection
 
-# Example
+# `dequeue`: remove an item from the beginning of the collection
 
-```javascript
-enqueue(1)
-enqueue(2)
-enqueue(3)
-dequeue() // => 1
-```
-# Constraints
-```
-enqueue:   Time Complexity: O(1),	Auxiliary Space Complexity: O(1)
-dequeue:   Time Complexity: O(N),	Auxiliary Space Complexity: O(1)
-```
+# ```
+# Input: 		N/A
+# Output: 	Queue Class
+# ```
 
-* 1) May not use other data structures other than the two `Stack` instances that are given
-* 2) Assume the `Queue` will only take integer values
-* 4) `Stack` class has the following methods:
+# # Example
 
-	`push`: add an item to the end of the collection
+# ```javascript
+# enqueue(1)
+# enqueue(2)
+# enqueue(3)
+# dequeue() // => 1
+# ```
+# # Constraints
+# ```
+# enqueue:   Time Complexity: O(1),	Auxiliary Space Complexity: O(1)
+# dequeue:   Time Complexity: O(N),	Auxiliary Space Complexity: O(1)
+# ```
 
-	`pop`: remove an from the end of the collection
+# * 1) May not use other data structures other than the two `Stack` instances that are given
+# * 2) Assume the `Queue` will only take integer values
+# * 4) `Stack` class has the following methods:
 
-	`size`: return the number of items in the stack
+# 	`push`: add an item to the end of the collection
 
-# Solution
+# 	`pop`: remove an from the end of the collection
 
-* 1) Create two `stacks` named `inbox` and `outbox`
-* 2) For the `enqueue` method, `push` the value into the `inbox`
-* 3) For the `dequeue` method, check the to see if the `outbox` contains items
-* 4) If the `outbox` contains items, `pop` from the `outbox` and return its value
-* 5) Otherwise for each item in the `inbox`, `pop` it out and `push` it into the `outbox`, then perform Step 4.
+# 	`size`: return the number of items in the stack
 
-# Code
+# # Solution
 
-```javascript
-// Assume that we have a Stack class imported
-const Stack = require('Stack');
+# * 1) Create two `stacks` named `inbox` and `outbox`
+# * 2) For the `enqueue` method, `push` the value into the `inbox`
+# * 3) For the `dequeue` method, check the to see if the `outbox` contains items
+# * 4) If the `outbox` contains items, `pop` from the `outbox` and return its value
+# * 5) Otherwise for each item in the `inbox`, `pop` it out and `push` it into the `outbox`, then perform Step 4.
 
-class Queue {
-  constructor() {
-    this.inbox = new Stack();
-    this.outbox = new Stack();
-  }
+# # Code
 
-  enqueue(item) {
-    this.inbox.push(item);  
-  }
+# ```javascript
+# // Assume that we have a Stack class imported
+# const Stack = require('Stack');
 
-  dequeue() {
-    if (this.outbox.size() > 0) {
-      return this.outbox.pop();
-    }
+# class Queue {
+#   constructor() {
+#     this.inbox = new Stack();
+#     this.outbox = new Stack();
+#   }
 
-    while (this.inbox.size() > 0) {
-      let transfer = this.inbox.pop();
-      this.outbox.push(transfer);
-    }
-    return this.outbox.pop();
-  }
-}
+#   enqueue(item) {
+#     this.inbox.push(item);  
+#   }
 
-```
+#   dequeue() {
+#     if (this.outbox.size() > 0) {
+#       return this.outbox.pop();
+#     }
 
-# Notes
+#     while (this.inbox.size() > 0) {
+#       let transfer = this.inbox.pop();
+#       this.outbox.push(transfer);
+#     }
+#     return this.outbox.pop();
+#   }
+# }
 
-Extremely helpful to diagram out the two stacks from the beginning.
+# ```
 
-Helpful to diagram out the  `Queue` you're building a separate diagram for the two `Stacks` under the hood.
+# # Notes
 
-Think about what should happen in both diagrams after perform a `enqueue` or `dequeue`
+# Extremely helpful to diagram out the two stacks from the beginning.
 
-What do you expect your `Queue` to return?
+# Helpful to diagram out the  `Queue` you're building a separate diagram for the two `Stacks` under the hood.
 
-# Resources
+# Think about what should happen in both diagrams after perform a `enqueue` or `dequeue`
 
-[Queue Using Two Stack on Geeks for Geeks](http://www.geeksforgeeks.org/queue-using-stacks/)
+# What do you expect your `Queue` to return?
+
+# # Resources
+
+# [Queue Using Two Stack on Geeks for Geeks](http://www.geeksforgeeks.org/queue-using-stacks/)

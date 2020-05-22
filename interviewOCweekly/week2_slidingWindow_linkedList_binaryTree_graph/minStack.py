@@ -1,145 +1,145 @@
-# Tell me about a time you had to overcome a roadblock?
+# # Tell me about a time you had to overcome a roadblock?
 
-Should take one minute; minute and a half at most
+# Should take one minute; minute and a half at most
 
-##### Prompt
+# ##### Prompt
 
-Say: "Tell me about a time you had to overcome a roadblock? What did you do?
+# Say: "Tell me about a time you had to overcome a roadblock? What did you do?
 
-##### Do you hear these things?
+# ##### Do you hear these things?
 
-- *Identify*: Does the interviewee discuss their competencies based on what you have asked them? Competencies include:
-   - Technical Skills (libraries, languages, etc.)
-   - Interpersonal Skills  
-
-
-- *Prove*: Does the interviewee provide a _specific_ example (past experience or hypothetical scenario)  to showcase competencies and/or fit? Is it presented in the form of a story (punchline, beginning, middle, positive end)?
+# - *Identify*: Does the interviewee discuss their competencies based on what you have asked them? Competencies include:
+#    - Technical Skills (libraries, languages, etc.)
+#    - Interpersonal Skills  
 
 
-- *Close*: Does the interviewee showcase why the company should hire them and how their skills/experience/values will add value to and align with the team/company? Does the interviewee showcase what they have learned in "Prove" and how they will apply it to the new role?
-
-# 212 - Min Stack
-
-Design a `min stack` class with the following properties:
-
-`push(value)` - Push an integer onto the stack
-
-`pop()` - 	Removes and returns the element on top of the stack
-
-`peek()` - Return the top value in the stack (do not remove it)
-
-`min()` - 	Return the minimum value in the stack
-
-You have access to a `Stack` class with `push(value)`, `pop()`, `peek()`, `size()` that all run in `O(1)` time/space.
-
-```
-Input:  N/A
-Output: Instance of a min stack
-```
-# Example
-```
-Input: 	
-
-minStack.push(-3)
-minStack.push(1)
-minStack.push(5)
-minStack.min()
-
-Output:	-3
+# - *Prove*: Does the interviewee provide a _specific_ example (past experience or hypothetical scenario)  to showcase competencies and/or fit? Is it presented in the form of a story (punchline, beginning, middle, positive end)?
 
 
-Input:
+# - *Close*: Does the interviewee showcase why the company should hire them and how their skills/experience/values will add value to and align with the team/company? Does the interviewee showcase what they have learned in "Prove" and how they will apply it to the new role?
 
-minStack.push(5)
-minStack.push(2)
-minStack.push(3)
-minStack.push(4)
-minStack.push(1)
+# # 212 - Min Stack
 
-Output:
+# Design a `min stack` class with the following properties:
 
-minStack.min()  => 1
+# `push(value)` - Push an integer onto the stack
 
-minStack.pop()
+# `pop()` - 	Removes and returns the element on top of the stack
 
-minStack.min() => 2 (does this in O(1) time and space)
+# `peek()` - Return the top value in the stack (do not remove it)
 
-```
-# Constraints
+# `min()` - 	Return the minimum value in the stack
 
-`Push`, `Pop`, `Peek`, and `Min` must be performed in:
+# You have access to a `Stack` class with `push(value)`, `pop()`, `peek()`, `size()` that all run in `O(1)` time/space.
 
-```
-Time Complexity: O(1)
+# ```
+# Input:  N/A
+# Output: Instance of a min stack
+# ```
+# # Example
+# ```
+# Input: 	
 
-Auxiliary Space Complexity: O(1)
-```
+# minStack.push(-3)
+# minStack.push(1)
+# minStack.push(5)
+# minStack.min()
 
-You have access to a `Stack` class with `push(value)`, `pop()`, `peek()`, `size()` that all run in `O(1)` time/space.
-
-All the `METHODS` are in constant time, constant space.
-
-However, your `MinStack` instance may contain more than one instance of a `Stack` class.
-
-IMPORTANT: only let the person being interviewed know that you can use multiple stacks if they get stuck.
-
-The main method you will be implementing is the `min()`.
+# Output:	-3
 
 
-# Solution
+# Input:
 
-Create two `stacks` using  `arrays` (or `dynamic arrays` if `java`) called `storage` and `minStorage`
+# minStack.push(5)
+# minStack.push(2)
+# minStack.push(3)
+# minStack.push(4)
+# minStack.push(1)
 
-`push(input)`:
+# Output:
 
-* 1) `push` the `input` into the `storage` `array`
-* 2) find lower of the last item in the `minStorage` `array` and the `input` value
-* 3) `push` the lower of the two into the `minStorage` `array`
+# minStack.min()  => 1
 
-`pop()`: `pop` from the `min` `array`, then `pop` and return the element from the  `storage` `array`
+# minStack.pop()
 
-`peek()`: return the last item in the `storage` array
+# minStack.min() => 2 (does this in O(1) time and space)
 
-`min()`: return the last item in the `minStorage` array
+# ```
+# # Constraints
 
-# Code
+# `Push`, `Pop`, `Peek`, and `Min` must be performed in:
 
-```javascript
-class MinStack {
-  constructor() {
-    this.storage = [];
-    this.minStorage = [];
-  }
+# ```
+# Time Complexity: O(1)
 
-  push(item) {
-    this.storage.push(item);
+# Auxiliary Space Complexity: O(1)
+# ```
 
-    if (this.minStorage.length === 0) {
-      this.minStorage.push(item);
-    } else if (item < this.min()) {
-      this.minStorage.push(item);
-    } else {
-      let minItem = this.min();
-      this.minStorage.push(minItem);
-    }
-  }
+# You have access to a `Stack` class with `push(value)`, `pop()`, `peek()`, `size()` that all run in `O(1)` time/space.
 
-  pop() {
-    this.minStorage.pop();
-    return this.storage.pop();
-  }
+# All the `METHODS` are in constant time, constant space.
 
-  peek() {
-    return this.storage[this.storage.length - 1];  
-  }
+# However, your `MinStack` instance may contain more than one instance of a `Stack` class.
 
-  min() {
-    return this.minStorage[this.minStorage.length - 1];
-  }
-}
+# IMPORTANT: only let the person being interviewed know that you can use multiple stacks if they get stuck.
 
-```
+# The main method you will be implementing is the `min()`.
 
-# Resources
 
-[Min Stack on Leetcode](https://leetcode.com/problems/min-stack/)
+# # Solution
+
+# Create two `stacks` using  `arrays` (or `dynamic arrays` if `java`) called `storage` and `minStorage`
+
+# `push(input)`:
+
+# * 1) `push` the `input` into the `storage` `array`
+# * 2) find lower of the last item in the `minStorage` `array` and the `input` value
+# * 3) `push` the lower of the two into the `minStorage` `array`
+
+# `pop()`: `pop` from the `min` `array`, then `pop` and return the element from the  `storage` `array`
+
+# `peek()`: return the last item in the `storage` array
+
+# `min()`: return the last item in the `minStorage` array
+
+# # Code
+
+# ```javascript
+# class MinStack {
+#   constructor() {
+#     this.storage = [];
+#     this.minStorage = [];
+#   }
+
+#   push(item) {
+#     this.storage.push(item);
+
+#     if (this.minStorage.length === 0) {
+#       this.minStorage.push(item);
+#     } else if (item < this.min()) {
+#       this.minStorage.push(item);
+#     } else {
+#       let minItem = this.min();
+#       this.minStorage.push(minItem);
+#     }
+#   }
+
+#   pop() {
+#     this.minStorage.pop();
+#     return this.storage.pop();
+#   }
+
+#   peek() {
+#     return this.storage[this.storage.length - 1];  
+#   }
+
+#   min() {
+#     return this.minStorage[this.minStorage.length - 1];
+#   }
+# }
+
+# ```
+
+# # Resources
+
+# [Min Stack on Leetcode](https://leetcode.com/problems/min-stack/)
