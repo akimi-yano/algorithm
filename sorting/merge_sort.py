@@ -1,9 +1,24 @@
 # sorting: 
 
-# merge sort - done
-# heap sort - done
-# quick sort 
+# stable sort = equal items will remain in order
 
+# inefficient sorts O(N^2) on average:
+#   bubble sort: O(N^2) - stable sort - we swap my self and right enight so that myself>right - if sorted, only takes linear time complexity - constant space complexity
+#   selection sort: O(N^2) - not stable sort - get the min of the right side and update onr by one as you iterate through - constant space complexity - quadratic time at best
+#   insertion sort: O(N^2) - stable sort - twice faster than bubble sort and selection sort - compare each element (on the right) with already sorted portion (right) and inset the element at the right spot - constant space complexity - streamable - fast for nearly sorted arrays O(kn) where k is an average distance from the sorted position - linear time for sorted arrays - good if n<10
+
+# more efficient sorts O(NlogN) on average:
+# - more useful for larger dataset n>10
+#   merge sort: O(NlogN) - stabe sort - for objects, linked lists - worst case time complexity O(NlogN) - even if its sorted, it still takes O(NlogN) time - must duplicate array so space complexity O(N)
+#   heap sort: O(NlogN) -  not stable sort - worst case is still O(NlogN) - constant space complexity -  on average heap sort is slower that quick sort
+#   quick sort: O(NlogN) - not stable sort - for premitives - worst case time: O(N^2) (if you choose a wrong element as pivot) but on average, quick sort is 2-3 times faster than merge sort  - even if its sorted, it still takes O(NlogN) time
+
+
+# Other sorting algos:
+#     Shellsort
+#     Comb sort
+#     Timsort - combined insertion sort and merge sort to give the best time complexity that is linear
+    
 import heapq
 
 def merge_sort(arr):
@@ -72,6 +87,8 @@ print("heap sort: ", heap_sort([3,1,4,1,5,9,2,6,5,2,5]))
 # separate the arr into three pieces
 # return arr thats put together
 
+
+# do in place version later to optimize it
 def quick_sort(arr):
     if len(arr)<2:
         return arr
