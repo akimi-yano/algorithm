@@ -1,5 +1,5 @@
 # WEEK2 Exam Probelms (2 problems)
-
+import math
 # Problem 1. Condensed List 
 # Given a list of integers, remove any nodes that have values that have previously occurred in the list and return a reference to the head of the list.
 
@@ -183,6 +183,36 @@ def condense(head):
 # The function accepts INTEGER_ARRAY a as parameter.
 #
 
-def isValid(a):
-    pass
+def isValidBST(a):
+    leaf_nodes = []
+    leaf_nodes.append((a[0],math.inf))
+    leaf_nodes.append((-math.inf,a[0]))
+    for i in range(1,len(a)):
+        while True:
+            # print(leaf_nodes, a[i])
+            if len(leaf_nodes)<1:
+                return "NO"
+            node = leaf_nodes.pop()
+            lower, upper = node
+            if a[i] >= lower and a[i] <= upper:
+                leaf_nodes.append((a[i],upper))
+                leaf_nodes.append((lower,a[i]))
+                break
+            else:
+                pass
+    return "YES"
+    
+print(isValidBST([2, 1, 3, 4, 5])) 
+print(isValidBST([1, 3, 2]))
+print(isValidBST([2, 1, 3]))
+print(isValidBST([3, 2, 1, 5, 4, 6]))
+print(isValidBST([1, 3, 4, 2]))
+print(isValidBST([3, 4, 5, 1, 2]))
 
+# Expected outputs:
+# YES
+# YES
+# YES
+# YES
+# NO
+# NO
