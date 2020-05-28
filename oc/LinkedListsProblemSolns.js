@@ -81,6 +81,7 @@ function swapNodes(head, a, b) {
 }
 
 
+
 function isCircular(node) {
     let tortoise = node;
     let hare = node;
