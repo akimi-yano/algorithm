@@ -37,18 +37,20 @@ def can_book_meeting(arr,meeting):
     low = 0
     high = len(arr)-1
 # compare the start with arr[mid][1]
-    while low<=high:
+    while low<high:
         mid = (low+high)//2
         if start<=arr[mid][1]:
-            break
+            high = mid
         else: 
             low = mid+1
 
-    if start<=arr[mid][1] and end<=arr[mid][0]:
+    if arr[low][0]<=start:
         return False
     else:
-        return True      
-print(can_book_meeting([[29, 30],[31, 40],[60, 75]],[28, 50]))
+        return True    
+print(can_book_meeting([[29, 30],[31, 40],[60, 75]],[50, 59]))  #true
+print(can_book_meeting([[29, 30],[31, 40],[60, 75]],[28, 50])) #false
+# print(can_book_meeting([[29, 30],[31, 40],[60, 75]],[28, 29])) #true
 # O(n) -> arr[i][1] < meeting[0] -> meeting[1] < arr[i+1][0]
 # O(log n) -> arr[i][1] < meeting[0] -> meeting[1] < arr[i+1][0]
 # edge cases are for beginning and end of arr
