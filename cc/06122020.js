@@ -70,24 +70,60 @@
 //      * The function accepts following parameters:
 //      *  1. INTEGER_ARRAY numbers
 
+// dont do this, this doesnt work
 
-function countPairs(numbers, k) {
-    var check = new Set([])
+// function countPairs(numbers, k) {
+//     var check = new Set([])
+//     var counter = 0
+//     for (let i=0;i<numbers.length;i++){
+//         check.add(numbers[i])
+//     }
+//     check.forEach(elem => {
+//         if (check.has(elem+k)) {
+//             counter++
+//         }
+//     })
+//     return counter
+
+// }
+
+// console.log(countPairs([1, 1, 2, 2, 3, 3],1))
+// this code above does not handle the case below
+// console.log(countPairs([1,2,3],0))
+
+
+function countPairs2(numbers, k) {
+    var check = {}
     var counter = 0
     for (let i=0;i<numbers.length;i++){
-        check.add(numbers[i])
+        if (check[numbers[i]+k]){
+            check[numbers[i]+k]+=1
+        }
+        else{
+            check[numbers[i]+k]=1
+        }
     }
-    check.forEach(elem => {
-        if (check.has(elem+k)) {
-            counter++
+    // console.log(check)
+    numbers.forEach(elem => {
+        if (elem in check) {
+            check[elem]-=1;
+            if (check[elem]<1){
+                delete check[elem];
+            }
+            else{
+                counter++;
+            }
         }
     })
+    // console.log(check)
     return counter
 
 }
 
-
-
+console.log(countPairs2([1, 1, 2, 2, 3, 3],1))
+console.log(countPairs2([1,2,3],0))
+console.log(countPairs2([1,1,2,3],0))
+console.log(countPairs2([1, 1, 1, 2],1))
 
 // 2. Divisibility Of Strings
 // As an assignment, a student is given two strings s and t. Create a function that performs per the following rules.
@@ -205,3 +241,4 @@ function findSmallestDivisor(s, t) {
     }
     return t.length
 }
+// console.log(findSmallestDivisor('lrbblrbb','lrbb'))
