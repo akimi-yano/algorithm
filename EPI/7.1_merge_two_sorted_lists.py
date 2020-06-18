@@ -66,3 +66,30 @@ def merge_two_sll(sl1,sl2):
 sl3 = merge_two_sll(sl1,sl2)
 print("*"*10, "Linked List 3", "*"*10)
 sl3.display()
+
+
+
+# more  efficient
+def merge_two_sorted_lists(l1,l2):
+    # create a placeholder for the result
+    dummy_head = tail = Node(0)
+    
+    while l1 and l2:
+        if l1.val <= l2.val:
+            tail.next, l1 = l1, l1.next
+        else:
+            tail.next, l2 = l2, l2.next
+        tail = tail.next
+    # appends the remaining nodes of l1 or l2
+    tail.next = l1 or l2
+    return dummy_head.next
+
+sl4_head_node = (merge_two_sorted_lists(sl1.head,sl2.head))
+
+print("*"*10, "Linked List 4", "*"*10)
+def printer(node):
+    cur = node
+    while cur is not None:
+        print(cur.val)
+        cur = cur.next
+printer(sl4_head_node)
