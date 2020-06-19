@@ -71,24 +71,18 @@ sl3.display()
 
 # more  efficient
 def merge_two_sorted_lists(l1,l2):
-    if l1.val>l2.val:
-        result_node = l2
-        tail = l1
-    else:
-        result_node = l1
-        tail = l2
-    result_node.next = tail
+    # create a placeholder for the result
+    dummy_head = tail = Node(0)
+    
     while l1 and l2:
         if l1.val <= l2.val:
-            tail.next = l1
-            l1 = l1.next
+            tail.next, l1 = l1, l1.next
         else:
-            tail.next = l2
-            l2 = l2.next
+            tail.next, l2 = l2, l2.next
         tail = tail.next
     # appends the remaining nodes of l1 or l2
     tail.next = l1 or l2
-    return result_node
+    return dummy_head.next
 
 sl4_head_node = (merge_two_sorted_lists(sl1.head,sl2.head))
 
