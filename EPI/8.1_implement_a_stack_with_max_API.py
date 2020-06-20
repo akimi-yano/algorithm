@@ -9,7 +9,7 @@ class Stack:
         self.max_vals = []
         
     def push_to_bottom(self,val):
-        if len(self.storage)==0 or self.storage[len(self.storage)-1]<val:
+        if len(self.max_vals)==0 or self.max_vals[len(self.max_vals)-1]<=val:
             self.max_vals.append(val)
         self.storage.append(val)
         return self
@@ -32,8 +32,14 @@ class Stack:
         
 
 new_stack = Stack()
-new_stack.push_to_bottom(1).push_to_bottom(2).push_to_bottom(3).push_to_bottom(4).push_to_bottom(5)
+new_stack.push_to_bottom(1).push_to_bottom(2).push_to_bottom(3).push_to_bottom(4).push_to_bottom(5).push_to_bottom(5).push_to_bottom(4)
+print(new_stack.get_max())
 new_stack.pop_bottom()
+print(new_stack.get_max())
+new_stack.pop_bottom()
+print(new_stack.get_max())
+new_stack.pop_bottom()
+print(new_stack.get_max())
 new_stack.print_vals()
 new_stack.push_to_bottom(100)
 print(new_stack.get_max())
