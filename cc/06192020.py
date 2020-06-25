@@ -75,6 +75,27 @@
 # The function accepts STRING_ARRAY commands as parameter.
 
 
+# def doesCircleExist(commands):
+#     moves = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+#     ans = []
+#     for command in commands:
+#         move_idx = 0
+#         cur = [0, 0]
+#         # repeating the commands 4 times is sufficient to come back to the original position
+#         for _ in range(4):
+#             for c in command:
+#                 if c == 'R':
+#                     move_idx = (move_idx+1) % 4
+#                 elif c == 'L':
+#                     move_idx = (move_idx-1) % 4
+#                 elif c == 'G':
+#                     cur = [sum(dim) for dim in zip(cur, moves[move_idx])]
+#         if cur == [0, 0]:
+#             ans.append('YES')
+#         else:
+#             ans.append('NO')
+#     return ans
+
 def doesCircleExist(commands):
     moves = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     ans = []
@@ -89,7 +110,9 @@ def doesCircleExist(commands):
                 elif c == 'L':
                     move_idx = (move_idx-1) % 4
                 elif c == 'G':
-                    cur = [sum(dim) for dim in zip(cur, moves[move_idx])]
+                    # cur = [sum(dim) for dim in zip(cur, moves[move_idx])]
+                    move_x, move_y = moves[move_idx]
+                    cur[0], cur[1] = cur[0]+move_x, cur[1]+move_y
         if cur == [0, 0]:
             ans.append('YES')
         else:
