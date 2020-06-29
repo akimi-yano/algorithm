@@ -68,3 +68,4 @@ def robotPaths(matrix):
         return helper(x+1,y) + helper(x,y+1) + helper(x-1,y) + helper(x,y-1)
     return helper(0,0)
 
+print(robotPaths([[ 0, 0, 0],[ 0, 0, 0]]))
