@@ -32,6 +32,8 @@
 
 # print(max_area_serving_cake([1, 1, 1, 2, 2, 3],6))
 
+
+
 import math
 
 

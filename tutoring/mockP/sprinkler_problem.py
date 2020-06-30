@@ -15,6 +15,7 @@
 
 import  heapq
 def min_sprinkler(arr):
+    # print(arr)
     max_jumps = [0]*len(arr)
     best = 0
     for i in range(len(arr)):
@@ -23,18 +24,18 @@ def min_sprinkler(arr):
     # print(max_jumps)
     
     maxheap = []
-    for k in range(len(max_jumps)-1,-1,-1):
-        heapq.heappush(maxheap,((-1)*max_jumps[k],k))
-        while len(maxheap)>0:
-            popped = heapq.heappop(maxheap)
-            val, idx = popped
-            val*=(-1)
-            if max_jumps[k]<val:
-                if idx<=k:
-                    max_jumps[k]=val
-                    break
+    for k in range(len(arr)-1,-1,-1):
+        heapq.heappush(maxheap,((-1)*(k+arr[k]+1),k-arr[k]))
+        # print(maxheap)
+        while len(maxheap)>0 and maxheap[0][1] > k:
+            heapq.heappop(maxheap)
+        val, idx = maxheap[0]
+        val*=(-1)
+        if max_jumps[k]<val:
+            if idx<=k:
+                max_jumps[k]=val
             
-    print(max_jumps)        
+    # print(max_jumps)        
     count = 0
     cur_i = 0
     while cur_i <len(max_jumps):
