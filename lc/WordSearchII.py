@@ -152,7 +152,7 @@ print(s.findWords([
     
     
 
-# fixed my code and I did it again and it works !!!
+# fixed my code and I did it again and it works !!! so proud !!! 
 
 class Solution:
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
@@ -192,6 +192,6 @@ class Solution:
 
         for row in range(len(board)):
             for col in range(len(board[row])):
-                helper(row,col, "", memo)
+                helper(row, col, "", memo)
         return ans 
      
