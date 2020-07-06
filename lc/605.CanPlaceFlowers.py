@@ -73,4 +73,38 @@ class Solution:
                     
                     
                     
-                    
+# optimized ver 
+def canPlaceFlowers(self, A, N):
+    for i, x in enumerate(A):
+        if (not x and (i == 0 or A[i-1] == 0) 
+                and (i == len(A)-1 or A[i+1] == 0)):
+            N -= 1
+            A[i] = 1
+    return N <= 0
+
+# optimized my previous code --- still not the fasted   
+class Solution:
+    def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
+        for i,x in enumerate(flowerbed):
+            if (not x and (i==0 or flowerbed[i-1]==0) and (i == len(flowerbed)-1 or flowerbed[i+1]==0)):
+                n-=1               
+                flowerbed[i]=1
+        return n<=0
+
+
+# a different solution
+    def canPlaceFlowers(self, flowerbed, n):
+        flowerbed.insert(0, 0)
+        flowerbed.append(0)
+        count = 0
+        for f in flowerbed:
+            if f == 0:
+                count += 1
+            else:
+                count = 0
+            if count == 3:
+                n -= 1
+                count = 1
+            if n == 0:
+                return True
+        return False
