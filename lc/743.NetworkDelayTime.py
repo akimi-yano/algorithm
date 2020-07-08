@@ -21,51 +21,51 @@
 import heapq
 import math
 # this approach tries djikstras algo but not working
-def networkDelayTime(times, N, s):
-    adj_list = {}
-    for time in times:
-        if time[0] not in adj_list:
-            adj_list[time[0]]=[(time[1],time[2])]
-        else:
-            adj_list[time[0]].append((time[1],time[2]))
-    print(adj_list)
-    costs = {}
-    for node in adj_list.keys():
-        if node == s:
-            costs[s] = 0
-        else:
-            costs[node] = math.inf
-    print(costs)
-    minheap = []
-    heapq.heappush(minheap,(costs[s],s))
-    known = set([])
-    print(minheap)
-    while len(minheap)>0:
-        popped = heapq.heappop(minheap)
-        cur_cost, cur_node = popped
-        # we might have duplicates
-        if cur_node in known:
-            continue
+# def networkDelayTime(times, N, s):
+#     adj_list = {}
+#     for time in times:
+#         if time[0] not in adj_list:
+#             adj_list[time[0]]=[(time[1],time[2])]
+#         else:
+#             adj_list[time[0]].append((time[1],time[2]))
+#     print(adj_list)
+#     costs = {}
+#     for node in adj_list.keys():
+#         if node == s:
+#             costs[s] = 0
+#         else:
+#             costs[node] = math.inf
+#     print(costs)
+#     minheap = []
+#     heapq.heappush(minheap,(costs[s],s))
+#     known = set([])
+#     print(minheap)
+#     while len(minheap)>0:
+#         popped = heapq.heappop(minheap)
+#         cur_cost, cur_node = popped
+#         # we might have duplicates
+#         if cur_node in known:
+#             continue
 
-        known.add(cur_node)
-        for edge in adj_list[cur_node]:
-            next_node, edge_cost = edge
-            if next_node in known:
-                continue
-            potential_cost = cur_cost+edge_cost
-            if next_node  not in costs:
-                continue
-            if potential_cost >= costs[next_node]:
-                continue
-            costs[next_node] = potential_cost
-            heapq.heappush(minheap,(potential_cost, next_node))
-    print(costs)
-    print(known)
+#         known.add(cur_node)
+#         for edge in adj_list[cur_node]:
+#             next_node, edge_cost = edge
+#             if next_node in known:
+#                 continue
+#             potential_cost = cur_cost+edge_cost
+#             if next_node  not in costs:
+#                 continue
+#             if potential_cost >= costs[next_node]:
+#                 continue
+#             costs[next_node] = potential_cost
+#             heapq.heappush(minheap,(potential_cost, next_node))
+#     print(costs)
+#     print(known)
     
-    if len(known)== N:
-        return max(costs.values())
-    else:
-        return -1
+#     if len(known)== N:
+#         return max(costs.values())
+#     else:
+#         return -1
  
 print(networkDelayTime([[2,1,1],[2,3,1],[3,4,1]],4,2)) #output should be 2
 
@@ -149,3 +149,61 @@ class Solution(object):
                     
         return max(dis.values()) if len(dis)==N else -1 #[5]
 
+
+# DFS solution that does not work !
+
+# class Solution:
+#     def networkDelayTime(self, times: List[List[int]], N: int, K: int) -> int:
+#         adj_list = {}
+#         for time in times:
+#             if time[0] not in adj_list:
+#                 adj_list[time[0]]=[(time[1],time[2])]
+#             else:
+#                 adj_list[time[0]].append((time[1],time[2]))
+#         seen = set([])
+#         def helper(cur):
+#             if cur in seen:
+#                 return 0
+#             seen.add(cur)
+#             if cur not in adj_list:
+#                 return 0
+#             max_time = 0
+#             for next_node in adj_list[cur]:
+#                 next_val,time_next =next_node
+#                 if next_val not in seen:
+#                     max_time=max(max_time,time_next+helper(next_val))
+#             return max_time 
+#         ans = helper(K) 
+#         # print(seen)
+#         return ans if len(seen)==N else -1
+
+
+
+# finally ! solution that works and I am happy with :
+    
+    import heapq
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], N: int, K: int) -> int:
+        minheap = []
+        cur_dist = 0
+        heapq.heappush(minheap,(cur_dist,K))
+        
+        remaining = set([i for i in range(1,N+1)])
+        adj_list = {}
+        for start, goal, dist in times:
+            if start not in adj_list:
+                adj_list[start] = [(dist, goal)]
+            else:
+                adj_list[start].append((dist, goal))
+        
+        while len(minheap)>0 and len(remaining)>0:
+            dist,node = heapq.heappop(minheap)
+            if node not in remaining:
+                continue
+            remaining.remove(node)
+            cur_dist = dist
+            if node in adj_list:
+                for next_dist, next_node in adj_list[node]:
+                    heapq.heappush(minheap,(cur_dist+next_dist,next_node))
+                    
+        return cur_dist if len(remaining) == 0 else -1
