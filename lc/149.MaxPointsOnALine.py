@@ -30,12 +30,10 @@
 # NOTE: input types have been changed on April 15, 2019. Please reset to default code definition to get new method signature.
 
 
-
-
 class Solution:
     def maxPoints(self, points: List[List[int]]) -> int:
         # because of floating point precision errors/overflow, we should keep
-        # the slope and intercept in their frational terms.
+        # the slope and intercept in their fractional terms.
 
         if len(points)==0:
             return 0
@@ -89,7 +87,7 @@ class Solution:
         
         # print(equations)
         best = 0
-        for equation, pts in equations.items():
+        for pts in equations.values():
             # tally up the unique points count, and update best as necessary.
             best = max(best, sum([unique_points[pt] for pt in pts]))
         return best
