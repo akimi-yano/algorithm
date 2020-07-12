@@ -138,7 +138,7 @@ class Solution:
         yc = sum([p[1] for p in positions])/len(positions)
         error = euclidean(xc, yc)
         
-        # use multiplier (<=+100) to move the 4 induces equally
+        # use multiplier (<=100) to move the 4 indices equally
         multiplier = 100
         # epsilon is 10^-5 = 0.00001 so use 10^6 = 0.000001
         epsilon = 0.000001
