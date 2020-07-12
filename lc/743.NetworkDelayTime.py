@@ -67,7 +67,7 @@ import math
 #     else:
 #         return -1
  
-print(networkDelayTime([[2,1,1],[2,3,1],[3,4,1]],4,2)) #output should be 2
+# print(networkDelayTime([[2,1,1],[2,3,1],[3,4,1]],4,2)) #output should be 2
 
 
 # this doest work cuz it doible counts the ones that happen at the same time
@@ -181,7 +181,7 @@ class Solution(object):
 
 # finally ! solution that works and I am happy with :
     
-    import heapq
+import heapq
 class Solution:
     def networkDelayTime(self, times: List[List[int]], N: int, K: int) -> int:
         minheap = []
