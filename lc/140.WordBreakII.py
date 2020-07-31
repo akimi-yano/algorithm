@@ -74,28 +74,60 @@ class Solution:
 
 # this solution works
 
-def wordBreak(self, s, wordDict):
-    """
-    :type s: str
-    :type wordDict: Set[str]
-    :rtype: List[str]
-    """
-    return self.helper(s, wordDict, {})
+# def wordBreak(self, s, wordDict):
+#     """
+#     :type s: str
+#     :type wordDict: Set[str]
+#     :rtype: List[str]
+#     """
+#     return self.helper(s, wordDict, {})
     
-def helper(self, s, wordDict, memo):
-    if s in memo: return memo[s]
-    if not s: return []
+# def helper(self, s, wordDict, memo):
+#     if s in memo: return memo[s]
+#     if not s: return []
     
-    res = []
-    for word in wordDict:
-        if not s.startswith(word):
-            continue
-        if len(word) == len(s):
-            res.append(word)
-        else:
-            resultOfTheRest = self.helper(s[len(word):], wordDict, memo)
-            for item in resultOfTheRest:
-                item = word + ' ' + item
-                res.append(item)
-    memo[s] = res
-    return res
+#     res = []
+#     for word in wordDict:
+#         if not s.startswith(word):
+#             continue
+#         if len(word) == len(s):
+#             res.append(word)
+#         else:
+#             resultOfTheRest = self.helper(s[len(word):], wordDict, memo)
+#             for item in resultOfTheRest:
+#                 item = word + ' ' + item
+#                 res.append(item)
+#     memo[s] = res
+#     return res
+
+
+# this works!!!!!! most intuitive to me 
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
+        words=set(wordDict)
+        memo={}
+        
+        # input: string without spaces
+        # output: list of sentences with spaces placed
+        # ex.
+        # in:  "applepenapple"
+        # out ["apple pen apple", "applepen apple"]
+        def helper(s):
+            if s in memo:
+                return memo[s]
+            if len(s)<1:
+                return ['']
+            res = []
+            for word in words:
+                if len(word)<=len(s) and word==s[:len(word)]:
+                    # print(s, word, ',', helper(s[len(word):]))
+                    sentences = helper(s[len(word):])
+                    for sentence in sentences:
+                        if sentence == '':
+                            res.append(word)
+                        else:
+                            res.append(word + ' ' + sentence)
+            memo[s]=res
+            return res
+        return helper(s)  
