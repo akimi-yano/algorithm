@@ -50,4 +50,26 @@ class Solution:
     # Time: O(N)
     # Space: O(N)
     
+
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        numsLen = len(nums)
+        productWithoutSelf = [1] * numsLen
+        
+        # productWithoutSelf[i] as product of elements to the left of nums[i].
+        for i in range(1, numsLen):
+            productWithoutSelf[i] = productWithoutSelf[i - 1] * nums[i - 1]
+        
+        # productWithoutSelf[i] multiply product of elements to the right of nums[i].
+        rightProduct = 1
+        for i in range(numsLen - 1, -1, -1):
+            productWithoutSelf[i] *= rightProduct
+            rightProduct = rightProduct * nums[i]
+            
+        return productWithoutSelf
     
+    # Time: O(N)
+    # Space: O(1)
