@@ -60,3 +60,14 @@ here comes the final code:
 return num != 0 and num &(num-1) == 0 and num & 1431655765== num
 
 '''
+
+class Solution:
+    def isPowerOfFour(self, num: int) -> bool:
+        if num<1:
+            return False
+        while num!=1:
+            if num&3!=0:
+                return False
+            else:
+                num=num>>2
+        return True
