@@ -113,3 +113,59 @@ class WordDictionary(object):
             if not node:
                 return 
             self.dfs(node, word[1:])
+            
+            
+            
+# more intuitive solution
+
+from collections import defaultdict
+class TrieNode:
+    def __init__(self):
+        self.children = defaultdict(TrieNode)
+        self.is_word = False
+
+class WordDictionary:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.root = TrieNode()
+
+    def addWord(self, word: str) -> None:
+        """
+        Adds a word into the data structure.
+        """
+        current = self.root
+        for letter in word:
+            current = current.children[letter]
+        current.is_word = True
+
+    def search(self, word: str) -> bool:
+        """
+        Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter.
+        """
+        def helper(current,i):
+            if i==len(word):
+                return current.is_word
+  
+            if word[i] == ".":
+                for next_letter, next_node in current.children.items():
+                    if helper(next_node,i+1):
+                        return True
+                    
+            else:
+                # print(current)
+                current = current.children.get(word[i])
+                if not current:
+                    return False
+                else:
+                    return helper(current,i+1)
+        return helper(self.root,0)
+        
+
+
+# Your WordDictionary object will be instantiated and called as such:
+# obj = WordDictionary()
+# obj.addWord(word)
+# param_2 = obj.search(word)
