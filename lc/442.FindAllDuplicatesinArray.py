@@ -16,7 +16,7 @@
 # my solution  that works !
 
 class Solution:
-    def findDuplicates(self, nums: List[int]) -> List[int]:
+    def findDuplicates(self, nums) :
         ans = []
         for idx in nums:
         
@@ -146,8 +146,8 @@ arr_size = len(numRay);
 def v2(numRay,arr_size):
     for i in range(arr_size): 
         res = []
-        numRay[numRay[i] % arr_size] = numRay[numRay[i] % arr_size] +arr_size
-    
+        numRay[numRay[i] % arr_size] += arr_size
+    # print(numRay)
     for i in range(arr_size): 
         if (numRay[i] >= arr_size*2):  
             res.append(i)
