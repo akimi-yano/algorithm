@@ -53,3 +53,32 @@ def search_first_of_k(arr: List[int], key: int) -> int:
         else:
             lo = mid+1
     return -1 if arr[lo] != key else lo
+
+
+# UNPACKING ARGUMENT LISTS
+
+'''
+use * to  spread / unpack array / arrays 
+'''
+
+a = [1, 2, 3]
+a
+[1, 2, 3]
+def test(one, two, three):
+    print(one)
+    print(two)
+    print(three)
+
+test
+# test(a)
+
+test(*a)
+
+b =[1, 2, 3, 4]
+# test(b)
+# test(*b)
+
+import heapq
+
+ab_list = [a, b]
+print(list(heapq.merge(*ab_list)))
