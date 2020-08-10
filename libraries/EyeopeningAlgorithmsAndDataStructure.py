@@ -82,3 +82,11 @@ import heapq
 
 ab_list = [a, b]
 print(list(heapq.merge(*ab_list)))
+
+# STACK
+
+'''
+stack is useful when:
+1 you are comparing two elements
+2 you have to modify and remove element from string or list 
+'''
