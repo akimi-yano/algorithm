@@ -75,6 +75,14 @@ class Solution:
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
 class Solution:
     def pathSum(self, root: TreeNode, target_arg: int) -> int:
         if root is None:
@@ -96,24 +104,13 @@ class Solution:
             helper(cur.left,target, cur_sum)
             helper(cur.right,target, cur_sum)
             
+            # need to back track so that the cumulative sum is not passed to parents
             memo[cur_sum] -= 1
             if memo[cur_sum] < 1:
                 del memo[cur_sum]
             
         helper(root,target_arg,0)
         return self.total
-
-                
-            
-            
-            
-            
-            
-            
-            
-            
-        
-        
 
                 
             
