@@ -51,3 +51,55 @@ class Solution:
             memo[i] = min_rm
             return min_rm
         return helper(0)
+    
+    
+# For these type of questions (like merge intervals, meeting rooms) 
+# I am used to sort the start value (not better but just get used to). 
+# The idea is keep an 'end' value (initialize it as the end of first interval), 
+# loop over the rest of intervals, when there is overlap (b.begin < a.end), 
+# remove an interval (remove the one the has larger end value, so end=min(a.end,b.end)); 
+# when there is no overlay, just update end to the b.end.
+
+class Solution(object):
+    def eraseOverlapIntervals(self, intervals):
+        """
+        :type intervals: List[List[int]]
+        :rtype: int
+        """
+        
+        if not intervals:
+            return 0
+        
+        intervals.sort()
+        
+        end, remove = intervals[0][1], 0
+        for i in xrange(1, len(intervals)):
+            if intervals[i][0] < end: # overlap
+                remove += 1
+                end = min(end, intervals[i][1]) # remove the one has larger end value
+            else: 
+                end = intervals[i][1]
+        
+        return remove
+    
+
+
+# Did it and this works + intuitive !
+
+class Solution:
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+        if not intervals:
+            return 0
+        intervals.sort()
+        
+        end = intervals[0][1]
+        count = 0
+        
+        for i in range(1, len(intervals)):
+            if intervals[i][0]<end: #overlapping !
+                count+=1
+                end= min(end,intervals[i][1]) # remove the larger one
+            else: 
+                end = intervals[i][1]
+        
+        return count
