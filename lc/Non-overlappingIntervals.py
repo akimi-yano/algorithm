@@ -103,3 +103,9 @@ class Solution:
                 end = intervals[i][1]
         
         return count
+
+'''
+this problem is different from meeting room problem :
+    -meeting room problem: max overlap in which time - what is the busiest time ?
+    -non-overlapping problem: min removal to remove overlaps
+'''
