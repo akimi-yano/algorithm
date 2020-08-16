@@ -66,3 +66,20 @@ class Solution:
 二で割り切れる数にしてから二で割る　（その分たす：n % ２）か
 三で割り切れる数にしてから三で割る　（その分たす：n % ３）か
 '''
+
+# Yay this works ! with helper and memo !
+
+class Solution:
+    def minDays(self, n: int) -> int:
+        memo = {}
+        def helper(num):   
+            if num in memo:
+                return memo[num]
+            if num<=1:
+                res = num
+            else:
+                res = 1 + min(num%2+helper(num//2),num%3+helper(num//3))
+            memo[num] = res
+            return res
+        
+        return helper(n)
