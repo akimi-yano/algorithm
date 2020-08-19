@@ -55,4 +55,42 @@
 #                     num*=10
 #             answer.append(num)
 #         return answer
-            
+
+
+# This solution works ! recursive solution !
+
+class Solution:
+    def numsSameConsecDiff(self, N: int, K: int) -> List[int]:
+        # edge case: N is length 1, so just return 0-9
+        if N == 1:
+            return [str(i) for i in range(10)]
+        elif K == 0:
+            return [str(i) * N for i in range(1, 10)]
+        
+        ans = []
+        # at each loop, set the first number
+        for start_num in range(1, 10):
+            # the start num has to be valid
+            if start_num + K < 10 or start_num - K > -1:
+                ans += self.helper(K, N, start_num)
+        return ans
+    
+    # input:
+    #     N - length of the sequence
+    #     start_num - first number in the sequence
+    # output:
+    #     a list of sequences of length N that start with start_num
+    def helper(self, K, N, start_num):
+        if N == 1:
+            return [str(start_num)]
+        
+        results = []
+        if start_num + K < 10:
+            next_start_num = start_num + K
+            sub_results = self.helper(K, N - 1, next_start_num)
+            results.extend([str(start_num) + sub for sub in sub_results])
+        if start_num - K > -1:
+            next_start_num = start_num - K
+            sub_results = self.helper(K, N -1, next_start_num)
+            results.extend([str(start_num) + sub for sub in sub_results])
+        return results
