@@ -107,7 +107,7 @@ class Solution:
     def findRightInterval(self, intervals: List[List[int]]) -> List[int]:
         start_and_idx = [(start, i) for i, (start, end) in enumerate(intervals)]
         start_and_idx.sort()
-        print(start_and_idx)
+        # print(start_and_idx)
         
         def helper(start_and_idx, input_end):
             left = 0
