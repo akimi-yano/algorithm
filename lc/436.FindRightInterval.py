@@ -81,19 +81,51 @@ class Solution:
         
         # save the index and sort 
         new_intervals = []
-        for i in range(len(intervals)):
-            start,end = intervals[i]
-            new_intervals.append((start,end,i))
+        for j in range(len(intervals)):
+            start,end = intervals[j]
+            new_intervals.append((start,end,j))
         new_intervals.sort()
         
         # make a minheap for end
-        # initialize ans arr with -1s and update it as it as it goes
         minheap = []
+        # initialize ans arr with -1s and update it as it goes
         ans = [-1 for interval in intervals]
-        for cur_start,cur_end,cur_idx in new_intervals:
+        for start,end,j in new_intervals:
             # start larger than or equal to previous end 
-            while minheap and minheap[0][0] <= cur_start:
-                prev_end,prev_idx = heapq.heappop(minheap)
-                ans[prev_idx] = cur_idx
-            heapq.heappush(minheap, (cur_end, cur_idx))
+            while minheap and minheap[0][0] <= start:
+                _, i = heapq.heappop(minheap)
+                ans[i] = j
+            heapq.heappush(minheap, (end, j))
         return ans 
+    
+    
+    
+# This solution also works ! binary search :) but the same time complexity and space complexity
+
+import heapq
+class Solution:
+    def findRightInterval(self, intervals: List[List[int]]) -> List[int]:
+        start_and_idx = [(start, i) for i, (start, end) in enumerate(intervals)]
+        start_and_idx.sort()
+        print(start_and_idx)
+        
+        def helper(start_and_idx, input_end):
+            left = 0
+            right = len(start_and_idx)
+            while left < right:
+                mid = (left + right) // 2
+                start, idx = start_and_idx[mid]
+                if start < input_end:
+                    left = mid + 1
+                else:
+                    right = mid
+            if left >= len(start_and_idx):
+                return -1
+            return start_and_idx[left][1]
+        
+        ans = []
+        for _, end in intervals:
+            right_interval_idx = helper(start_and_idx, end)
+            ans.append(right_interval_idx)
+        
+        return ans
