@@ -130,7 +130,17 @@ def containsNearbyAlmostDuplicate(self, nums, k, t):
 
 # IMPROVEMENT !!! - use k_elems.bisect_left(num-t) and k_elems.bisect_right(num+t) as the method built info for SortedList!!!
 # Actually this is faster !!!! than the original solutions 
+'''
+I think my confusion was that the code seems to be using the bisect_{left,right} 
+functions from the builtinbisect module. The builtin functions are designed to operate on the builtin 
+list data type, so it will binary search using index lookup. Since SortedList is a BST, each index 
+lookup takes log(k), and since you need to binary search for the final index, that will take 
+O(log(k) * log(k)), for an average of O((log(k))^2).
 
+I think it should instead use SortedList's bisect_{left,right} methods, e.g. 
+SortedList.bisect_left(SList,...) or SList.bisect_left(...), which is aware of the BST data structure 
+and do binary search more efficiently, for an average O(log(k)). This seems to improve the submission time for me.
+'''
 from sortedcontainers import SortedList
 
 class Solution:
