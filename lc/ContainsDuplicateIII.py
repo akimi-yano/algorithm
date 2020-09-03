@@ -126,3 +126,30 @@ def containsNearbyAlmostDuplicate(self, nums, k, t):
         d[m] = nums[i]
         if i >= k: del d[nums[i - k] // w]
     return False
+
+
+# IMPROVEMENT !!! - use k_elems.bisect_left(num-t) and k_elems.bisect_right(num+t) as the method built info for SortedList!!!
+# Actually this is faster !!!! than the original solutions 
+
+from sortedcontainers import SortedList
+
+class Solution:
+    def containsNearbyAlmostDuplicate(self, nums: List[int], k: int, t: int) -> bool:
+        if k<0 or t<0:
+            return False
+        
+        k_elems = SortedList()
+        for i, num in enumerate(nums):
+            if len(k_elems)>k:
+                k_elems.remove(nums[i-k-1])
+                
+            pos1 = k_elems.bisect_left(num-t)
+            pos2 = k_elems.bisect_right(num+t)
+            
+            if pos1!=pos2:
+                return True
+
+            k_elems.add(num)
+        
+        return False
+            
