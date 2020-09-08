@@ -202,4 +202,12 @@ for line in tests[1:]:
     a, b, c = [int(elem) for elem in line.split(' ')]
     print(xornachi(a, b, c))
     
-    
+
+# EYEOPEINING SOLUTION 
+
+def test(a,b,n):
+    return [a,b,a^b][n%3]
+print(test(3,4,2))
+print(test(4,5,0))
+print(test(325,265,1231232))
+
