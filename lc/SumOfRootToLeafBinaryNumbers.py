@@ -49,4 +49,27 @@ class Solution:
         options = helper(root)
         # print(options)
         return sum([int("".join([str(c) for c in num]),2) for num in options])
+    
+    
+# Shorter and more concise solution :
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def sumRootToLeaf(self, root: TreeNode) -> int:
+
+        def helper(cur, s):
+            if not cur:
+                return 0
+            new_s = s + str(cur.val)
+            if not cur.left and not cur.right:
+                return int(new_s, 2)
+            return helper(cur.left, new_s) + helper(cur.right, new_s)
+
+        return helper(root, '')
+        
         
