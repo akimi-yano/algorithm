@@ -76,3 +76,24 @@ def getHint(self, secret, guess):
         B = collections.Counter(secret) & collections.Counter(guess)
         return "%dA%dB" % (A, sum(B.values()) - A)
 
+# intuitive way !!!!
+
+def getHint(self, secret, guess):
+    slist=list(secret)
+    glist=list(guess)
+    i=0
+    A=0
+    while i <len(slist) and i<len(glist):
+        if slist[i] == glist[i]:
+            A+=1
+            slist[i]=None
+            glist[i]=None
+        i+=1
+    scounts = Counter(slist)
+    gcounts = Counter(glist)
+    
+    B=0
+    for k in gcounts:
+        if k is not None and k in scounts:
+            B+=min(scounts[k],gcounts[k])
+    return '{}A{}B'.format(A,B)
