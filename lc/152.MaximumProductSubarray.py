@@ -52,3 +52,35 @@ class Solution:
             # compare best with max
             best = max(best, max_prod)
         return best 
+    
+    
+    
+# More intuitive way 
+
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        '''
+        2 paths solution
+        reset cur to 1 if I get 0
+        if its negative, keep going
+        there are only 2 patterns and 1 generic one:
+        [xxxooo]
+        [oooxxx]
+        [oooooo] (generic one)
+        '''
+        best = nums[0]
+        cur = 1
+        for i in range(len(nums)):
+            cur *= nums[i]
+            best = max(best, cur)
+            if cur == 0:
+                cur = 1
+        
+        cur = 1
+        for k in range(len(nums)-1,-1,-1):
+            cur*=nums[k]
+            best = max(best,cur)
+            if cur == 0:
+                cur = 1
+                
+        return best
