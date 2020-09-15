@@ -90,3 +90,11 @@ class Solution:
             return choice_a
         else:
             return choice_b
+        
+# Tabulation approach
+def rob(nums):
+    tookprev = 0
+    didnttakeprev = 0
+    for num in nums:
+        tookprev, didnttakeprev = didnttakeprev + num, max(tookprev, didnttakeprev)
+    return max(tookprev, didnttakeprev)
