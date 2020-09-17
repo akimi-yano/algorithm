@@ -70,5 +70,26 @@ class Solution:
         # original position at some point 
         return row == 0 and col == 0 or directions[i%4] != directions[0]
     
-
     
+    
+'''
+INTUITION:
+
+1 if robot returns to the origin, he is obvious in an circle.
+2 if robot finishes with face not towards north, it will get back to the initial status in another one or three sequences. 
+　（書いてみたら実際にわかる　！　ピタゴラス定理　！）
+'''
+
+'''
+EXPLANATION:
+
+We need to understand if he is going to loop. There are 3 possible options where path will be bounded.
+
+1 In the end it will arrive to the starting position.
+2 It will not arrive to the starting position and his orientation is rotated to the left or to the right. Then it can be shown easily that after 4 loops robot will return to the original place.
+3 It will not arrive to the start and his orientation is opposite, then after 2 loops he will arrive at the starting place.
+'''
+'''
+You can prove this with a graph used to illustrate Pythagorean theorem. Basically, four Connected Right triangles will form a square.
+The key point here is that you can only turn 90 degree each time, which is divisible by 360.
+'''
