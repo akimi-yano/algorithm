@@ -14,7 +14,8 @@
 # 2 represents the ending square.  There is exactly one ending square.
 # 0 represents empty squares we can walk over.
 # -1 represents obstacles that we cannot walk over.
-# Return the number of 4-directional walks from the starting square to the ending square, that walk over every non-obstacle square exactly once.
+# Return the number of 4-directional walks from the starting square to the ending square, 
+# that walk over every non-obstacle square exactly once.
 
 
 
@@ -96,3 +97,45 @@ class Solution:
             for col in range(n):
                 if grid[row][col] == 1:  
                     return helper(row,col,m,n,target)
+                
+                
+                
+                
+# Another solution:
+'''
+If you look carefully at your problem constraints: m*n <= 20, where m and n your grid sizes, we can guess, that we need to use dfs in this problem: 
+that is try to check all possible options. So, we need to do several steps:
+
+Find our starting point: traverse all grid and find cell with value 1. Also count number of cells we need to visit, I denoted them empty.
+Now, use recursive dfs(x,y, rest) function, where x and y are current coordinates in our cell and rest is how many empty cells we need to traverse.
+2.1 First we check if we can move to the current cell: if it is outside our grid and it is already visited or have obstacle, we return
+2.2 If current cell is end cell and we already visited all cells, we add 1 to self.ans.
+2.3 Define list of neighbours and for each of them run our dfs: mark visited cell with -2 and then mark it back when we go outside recursion. 
+It is important to do this, because in python grid is global variable and we need to change it back.
+FInally, we just run dfs(sx, sy, empty - 1), where (sx, sy) is coordinates of starting cell and return self.ans.
+Complexity: Space complexity is O(mn), this is the possible biggest length of our recursion stack. Time complexity is O(3^(mn)), 
+because on each step (except first) we have no more than 3 options to go: all directions except direction we came from. 
+In practice however it will work much faster than this estimate because of big number of dead-ends
+'''
+class Solution:
+    def uniquePathsIII(self, grid):
+        self.ans, empty = 0, 0
+        m, n = len(grid[0]), len(grid)
+        def dfs(x, y, rest):
+            if x < 0 or x >= n or y < 0 or y >= m or  grid[x][y] < 0: return
+            if grid[x][y] == 2 and rest == 0:
+                self.ans += 1
+            
+            neibs = [[0,1],[0,-1],[1,0],[-1,0]]
+            for dx, dy in neibs:
+                save = grid[x][y]
+                grid[x][y] = -2
+                dfs(x+dx, y+dy, rest - 1)
+                grid[x][y] = save
+            
+        for i,j in product(range(n), range(m)):
+            if grid[i][j] == 1: (sx, sy) = (i,j)
+            empty += (grid[i][j] != -1)
+
+        dfs(sx, sy, empty-1)
+        return self.ans
