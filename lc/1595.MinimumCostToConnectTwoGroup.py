@@ -80,3 +80,102 @@
 '''
         # def helper()
         
+
+
+# THIS SOLUTION WORKS!!!:
+
+'''
+recursion + memorization
+check group1 first (try all) and then check group 2 (assign min if it doesnt have pair)
+'''
+
+class Solution:
+    def connectTwoGroups(self, cost: List[List[int]]) -> int:
+        self.G1 = len(cost)
+        self.G2 = len(cost[0])
+        self.cost = cost
+
+        g1 = [1 for _ in range(self.G1)]
+        g2 = [1 for _ in range(self.G2)]
+        self.memo = {}
+        return self.helper(tuple(g1), tuple(g2))
+    
+    def helper(self, g1, g2):
+        key = g1, g2
+        if key in self.memo:
+            return self.memo[key]
+        
+        ans = float('inf')
+        if sum(g1) + sum(g2) < 1:
+            ans = 0
+        else:
+            g1_list = list(g1)
+            g2_list = list(g2)
+            if sum(g1) > 0:
+                g1_list = list(g1)
+                g1_idx = g1_list.index(1)
+                g1_list[g1_idx] = 0
+                for g2_idx in range(self.G2):
+                    old_val = g2_list[g2_idx]
+                    g2_list[g2_idx] = 0
+                    price = self.cost[g1_idx][g2_idx] + self.helper(tuple(g1_list), tuple(g2_list))
+                    ans = min(ans, price)
+                    g2_list[g2_idx] = old_val
+            else:
+                total = 0
+                for g2_idx in range(self.G2):
+                    if g2_list[g2_idx]:
+                        best = min([self.cost[_][g2_idx] for _ in range(self.G1)])
+                        total += best
+                ans = total
+        self.memo[key] = ans
+        return ans
+    
+
+# Optimization ! Using bit mask :
+
+class Solution:
+    def connectTwoGroups(self, cost: List[List[int]]) -> int:
+        self.G1 = len(cost)
+        self.G2 = len(cost[0])
+        self.cost = cost
+
+        g1 = g2 = 0
+        for _ in range(self.G1):
+            g1 = (g1 << 1) + 1
+        for _ in range(self.G2):
+            g2 = (g2 << 1) + 1
+        self.memo = {}
+        return self.helper(g1, g2)
+    
+    def helper(self, g1, g2):
+        key = g1, g2
+        if key in self.memo:
+            return self.memo[key]
+        
+        ans = float('inf')
+        if g1 + g2 < 1:
+            ans = 0
+        else:
+            if g1 > 0:
+                g1_idx = 0
+                while not g1 & (1 << g1_idx):
+                    g1_idx += 1
+                for g2_idx in range(self.G2):
+                    if g2 & (1 << g2_idx):
+                        price = self.cost[g1_idx][g2_idx] \
+                        + self.helper(g1 ^ (1 << g1_idx), g2 ^ (1 << g2_idx))
+                        ans = min(ans, price)
+                    else:
+                        price = self.cost[g1_idx][g2_idx] \
+                        + self.helper(g1 ^ (1 << g1_idx), g2)
+                        ans = min(ans, price)
+            else:
+                total = 0
+                for g2_idx in range(self.G2):
+                    if g2 & (1 << g2_idx):
+                        best = min([self.cost[_][g2_idx] for _ in range(self.G1)])
+                        total += best
+                ans = total
+        self.memo[key] = ans
+        return ans

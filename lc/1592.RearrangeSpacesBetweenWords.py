@@ -77,3 +77,27 @@ class Solution:
             else:
                 ans += " " * end
         return ans
+    
+
+# code after a code review !:
+
+class Solution:
+    def reorderSpaces(self, text: str) -> str:
+        word_count = 0
+        space_count = 0
+        for c in text:
+            if c == " ":
+                space_count+=1
+        text_list = text.split()
+        if len(text_list) < 2:
+            return "".join(text_list) + " " * space_count
+        word_count = len(text_list)
+
+        each_space = space_count // (word_count-1)
+        end = space_count % (word_count-1) 
+            
+        ans = ""
+        for i in range(len(text_list)-1):
+            ans += text_list[i] + " " * each_space
+        ans += text_list[-1] + " " * end
+        return ans
