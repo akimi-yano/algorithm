@@ -174,3 +174,33 @@ def maxSumRangeQuery(self, A, req):
     for v, c in zip(sorted(count[:-1]), sorted(A)):
         res += v * c
     return res % (10**9 + 7)
+
+
+
+# THIS SOLUTION WORKS !!! Rewrote the code  using  swipe line !
+
+class Solution:
+    mod = 10 ** 9 + 7
+
+    def maxSumRangeQuery(self, nums: List[int], requests: List[List[int]]) -> int:
+        # prepopulate the counts arr with an extra slots 
+        # add 1 for start and subtract 1 for end +1
+        counts = [0 for _ in range(len(nums)+1)] 
+        for start, end in requests:
+            counts[start] +=1
+            counts[end+1] -=1
+        # print(counts)
+        # update the counts arr with the accumulated val 
+        num = 0
+        for i, elem in enumerate(counts):
+            num += elem
+            counts[i] = num
+        # print(counts)
+        # sort both so that largest vals comes at the end
+        nums.sort()
+        counts.sort()
+        ans = 0
+        while counts and nums:
+            ans += counts.pop() * nums.pop()
+        
+        return ans % Solution.mod
