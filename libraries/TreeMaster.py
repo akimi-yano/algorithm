@@ -14,6 +14,8 @@ J: 8-1 Link-Cut Tree
 K: 8-2 Link-Cut Tree
 '''
 
+# UNION FIND　　
+
 # A: 3-1 Union Find - basic
 def union_find(n, edges):
     roots = [i for i in range(1,n+1)]
@@ -64,3 +66,31 @@ union_find(5,edges)
             # 3  4 - 2
             # \ /  
             #  5
+
+
+# SEGMENT TREE 
+
+# SEG 木　列を管理するデータ構造
+# できる操作　
+# １：区間の更新　（足し算、上書き）
+# ２：区間の集約の取得　（和、最小値）
+
+# 基本アイデア：
+    #　完全二分木の葉に値を保存
+    #　各頂点に子孫の集約を保存
+
+    #           O
+    #        /    \
+    #      O       O
+    #     /\       /\ 
+    #   O   O    O   O 
+    #  /\  /\   /\   /\
+    # O O  O O O O  O O     <- the values are saved at the leaves !  
+    
+    # width  : N
+    # height : logN
+
+# update from bottom 
+# the updating itself is O(1)
+
+# [a~b) -> a以上b未満　*bは入らない
