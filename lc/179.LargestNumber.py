@@ -121,3 +121,15 @@ class Solution:
         
         # Remove leading 0s, if empty return '0'.
         return ''.join(nums).lstrip('0') or '0'
+    
+    
+
+# This solution works !!!  Most intuitive
+
+from functools import cmp_to_key
+class Solution:
+    def concat_compare(self, a, b):
+        return int(str(b)+str(a))-int(str(a)+str(b)) 
+    
+    def largestNumber(self, nums: List[int]) -> str:
+        return str(int(''.join([str(num) for num in sorted(nums,key=cmp_to_key(self.concat_compare))])))
