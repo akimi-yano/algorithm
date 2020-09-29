@@ -165,4 +165,106 @@ class Solution:
                 
                 
                 
+# THIS SOLUTION WORKS !
+class Solution:
+    NUMS = set([chr(ord('0')+ i) for i in range(10)])
+    def isNumber(self, s: str) -> bool:
+        elems1 = s.strip().split('e')
+
+        # before the e
+        num = elems1[0]
+        if len(num) < 1:
+            return False
         
+        # check for signs
+        if num[0] not in Solution.NUMS and num[0] != '.':
+            sign, num = num[0], num[1:]
+            if sign not in ['+', '-']:
+                return False
+
+        elems2 = num.split('.')
+        
+        hasnumber = False
+        
+        # before the dot
+        whole = elems2[0]
+        if len(whole) > 0:
+            hasnumber = True
+            for c in whole:
+                if c not in Solution.NUMS:
+                    return False
+
+        # after the dot
+        if len(elems2) == 2:
+            fraction = elems2[1]
+            if len(fraction) > 0:
+                hasnumber = True
+            for c in fraction:
+                if c not in Solution.NUMS:
+                    return False
+        if not hasnumber:
+            return False
+
+        # too many dots
+        if len(elems2) > 2:
+            return False
+        
+        # exponent
+        if len(elems1) == 2:
+            exponent = elems1[1]
+            if len(exponent) < 1:
+                return False
+            # check for signs
+            if exponent[0] not in Solution.NUMS:
+                sign, exponent = exponent[0], exponent[1:]
+                if sign not in ['+', '-']:
+                    return False
+            if len(exponent) < 1:
+                return False
+            for c in exponent:
+                if c not in Solution.NUMS:
+                    return False
+        
+        if len(elems1) > 2:
+            return False
+        
+        return True
+    
+    
+    
+
+'''
+We use three flags: met_dot, met_e, met_digit, mark if we have met ., 
+e or any digit so far. First we strip the string, then go through each char and make sure:
+
+If char == + or char == -, then prev char (if there is) must be e
+. cannot appear twice or after e
+e cannot appear twice, and there must be at least one digit before and after e
+All other non-digit char is invalid
+
+'''
+
+class Solution(object):
+    def isNumber(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        s = s.strip()
+        met_dot = met_e = met_digit = False
+        for i, char in enumerate(s):
+            if char in ['+', '-']:
+                if i > 0 and s[i-1] != 'e':
+                    return False
+            elif char == '.':
+                if met_dot or met_e: return False
+                met_dot = True
+            elif char == 'e':
+                if met_e or not met_digit:
+                    return False
+                met_e, met_digit = True, False
+            elif char.isdigit():
+                met_digit = True
+            else:
+                return False
+        return met_digit

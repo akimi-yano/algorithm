@@ -96,3 +96,31 @@ class Solution:
                 total += right - left + 1
         
         return total  
+    
+    
+    
+
+# This solution works ! explanation :) cool cool and happy
+'''
+fix the end by doing loop and move start if the prod is too large
+
+if cur is too large - cannot go back to left because you are going to right (its just gonna be larger)and its accumulative
+
+since there is no negative number or 0, its just gonna get bigger, so need to remove a number by division
+'''
+
+
+class Solution:
+    def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
+        start = ans = 0
+        prod =  1
+        for end in range(len(nums)):
+            prod *= nums[end]
+            
+            while start <= end and prod >= k:
+                prod //= nums[start]
+                start += 1
+            
+            ans += end - start +1 
+        
+        return ans 

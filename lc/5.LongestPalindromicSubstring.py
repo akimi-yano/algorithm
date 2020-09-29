@@ -61,3 +61,26 @@ class Solution:
                 
         return best
         
+        
+        
+        
+# This solution works !
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        if len(s) < 1:
+            return ''
+
+        def helper(left, right):
+            if right >= len(s) or s[left] != s[right]:
+                return ''
+            while left-1 >=0 and right+1 < len(s) and s[left-1] == s[right+1]:
+                left -= 1
+                right += 1
+            return s[left:right+1]
+
+        best = s[0]
+        for i in range(len(s)):
+            # odd and even cases
+            best = max(best, helper(i, i), helper(i,i+1), key=len)
+        return best

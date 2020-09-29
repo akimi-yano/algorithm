@@ -111,3 +111,30 @@ class Solution:
                 del sCounter[s[i-len(p)+1]]   # remove the count if it is 0
         return res
     
+    
+    
+'''
+do sliding window - dont reset the counter to 0 but add and reduce within the window - make sure to delete if the count becomes 0
+DONT RESET THE COUNTER
+'''
+
+from collections import Counter 
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        N = len(p)
+        p_count = Counter(p)
+        # start with one less to make the loop easier.
+        s_count = Counter(s[:N-1])
+        ans = []
+        for start in range(len(s)-N+1):
+            # add the last character
+            s_count[s[start+N-1]] += 1
+        
+            if p_count == s_count:
+                ans.append(start)
+                
+            # remove the earliest character
+            s_count[s[start]] -= 1
+            if s_count[s[start]] < 1:
+                del s_count[s[start]]
+        return ans
