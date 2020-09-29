@@ -63,3 +63,106 @@ class Solution:
     def isNumber(self, s: str) -> bool:
         pattern = '\s*([+-]?((\d*\.\d+)|(\d+\.?\d*))(e[+-]?\d+)?)\s*'
         return re.fullmatch(pattern,s)
+    
+    
+    
+
+# This approach does not work :
+# class Solution:
+    # def isNumber(self, s: str) -> bool:
+    #     try: 
+    #         maybe_float = float(s)
+    #         return type(maybe_float) == float      
+    #     except:
+    #         return False
+    
+    # def isNumber(self, s: str) -> bool:
+    #     pattern = '\s*([+-]?((\d*\.\d+)|(\d+\.?\d*))(e[+-]?\d+)?)\s*'
+    #     return re.fullmatch(pattern,s)
+    '''
+    TRUE: 
+    "0"
+    " 0.1 "
+    "53.5e93" 
+    "2e10" 
+    " -90e3   " 
+    " 6e-1"
+
+    FALSE:
+    " 1e"
+    "e3" 
+    " 99e2.5 "
+    " --6 "
+    "-+3" 
+    "95a54e53" 
+    "abc" 
+    "1 a" 
+    '''
+    '''
+    Numbers: 0-9
+    Exponent: "e"
+    Positive/negative sign: "+" or "-"
+    Decimal point: "."
+    # '''
+
+    # def isNumber(self, s: str) -> bool:
+    #     NUMS  = set([str(i) for i in range(10)])
+    #     s =  s.strip()
+    #     sign = None
+    #     sign_idx = -1
+    #     expo = -1
+    #     num = -1
+    #     point = -1
+    #     if len(s) < 1:
+    #         return False
+    #     for i, elem in enumerate(s):
+    #         if elem == ' ':
+    #             return False
+    #         if elem  == '+':
+    #             if not sign:
+    #                 sign = "+"
+    #                 sign_idx = i
+    #                 if i != 0 and i!=expo+1:
+    #                     return False
+    #             else:
+    #                 return False
+    #         elif elem  == '-':
+    #             if not sign:
+    #                 sign = "-" 
+    #                 sign_idx = i
+    #                 if i != 0 and i!=expo+1:
+    #                     return False
+    #             else:
+    #                 return False
+    #         if elem == 'e':
+    #             if expo == -1:
+    #                 expo = i
+    #                 if num == -1:
+    #                     return False
+    #             else:
+    #                 return False
+    #         if elem in NUMS:
+    #             num = i
+    #         if elem == '.' and expo>-1:
+    #             return False
+    #         if elem == '.':
+    #             if point == -1:
+    #                 point = i
+    #             else:
+    #                 return False
+    #         if elem not in NUMS and elem != 'e' and elem !='.' and elem not in ["+","-"]:
+    #             return False
+            
+    #     if num == -1:
+    #         return False
+    #     if num<expo:
+    #         return False
+    #     if sign_idx == point-1:
+    #         return False
+    #     return True
+            
+                
+                
+                
+                
+        
