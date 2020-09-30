@@ -72,15 +72,11 @@ class Solution:
                     cur.next[char] = Node()
                 cur = cur.next[char]
             cur.is_word = True
-           
-        # self.memo = {}
+
         return self.search(s)
     
     @lru_cache(None)
     def search(self, s):
-        # if s in self.memo:
-        #     return self.memo[s]
-        
         if len(s)<1:
             return True
         
@@ -95,6 +91,51 @@ class Solution:
             cur = cur.next[char]
         
         ans = cur.is_word
-        # self.memo[s] = ans
+        return ans
+
+
+# THIS SOLUTION WORKS !!! TRIE + MEMORIZATION
+
+class Node:
+    def __init__(self):
+        self.next = {}
+        self.is_word = False
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        self.root = Node()
+        
+        for word in wordDict:
+            cur = self.root
+            for char in word:
+                if char not in cur.next:
+                    cur.next[char] = Node()
+                cur = cur.next[char]
+            cur.is_word = True
+        
+        self.memo = {}
+        return self.search(s)
+
+    def search(self, s):
+        if s in self.memo:
+            return self.memo[s]
+        
+        if len(s)<1:
+            return True
+        
+        cur = self.root
+        for i, char in enumerate(s):
+            if char not in cur.next:
+                self.memo[s] = False
+                return False
+
+            if cur.next[char].is_word:
+                if self.search(s[i + 1:]):
+                    self.memo[s] = True
+                    return True
+            cur = cur.next[char]
+        
+        ans = cur.is_word
+        self.memo[s] = ans
         return ans
         
