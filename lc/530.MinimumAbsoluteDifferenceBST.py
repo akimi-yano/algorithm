@@ -58,3 +58,31 @@ class Solution:
             min_diff = min(min_diff, abs(elem-prev))
             prev = elem
         return min_diff
+    
+    
+
+# This solution works and more concise :
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def getMinimumDifference(self, root: TreeNode) -> int:
+        self.best = float('inf')
+
+        def helper(cur, prev):
+            if not cur:
+                return prev
+            new_prev = helper(cur.left, prev)
+            
+            self.best = min(self.best, cur.val - new_prev)
+            
+            new_prev = helper(cur.right, cur.val)
+            
+            return new_prev
+
+        helper(root, float('-inf'))
+        return self.best
