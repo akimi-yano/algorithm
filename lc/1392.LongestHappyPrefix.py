@@ -125,3 +125,7 @@ class Solution:
                 best_left = i
 
         return s[:best_left+1]
+    
+    
+# There is also a solution with KMP algorithm !
+# https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm
