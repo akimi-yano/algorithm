@@ -186,37 +186,44 @@ from collections import deque
 
 class Solution:
     def snakesAndLadders(self, board: List[List[int]]) -> int:
+        # start with a tuple of val and path#
         queue = deque([(1, 0)])
         N = len(board)
+        # its a square matrix
         target = N ** 2
         seen = set([])
         while len(queue) > 0:
             num, level = queue.popleft()
+            # use seen set to not go to the same path
             if num in seen:
                 continue
             seen.add(num)
-
+            # found the answer 
             if num == target:
                 return level
 
             for delta in range(1, 7):
                 next_num = num + delta
+                # important ! don't put it into queue if it  goes over the target
                 if next_num > target:
                     continue
+                # we need the row and col index because we need to check if its -1 or snake or ladder
                 row, col = self.get_loc(next_num, N)
                 print(row, col)
                 if board[row][col] == -1:
                     queue.append((next_num, level+1))
                 else:
+                    # if  it's snake or ladder, just use the value
                     queue.append((board[row][col], level+1))
                 
         return -1
     
     def get_loc(self, num, N):
-        
+        # find row
         row = N -1 - ((num-1) //N)
+        
+        # find col
         col = (num-1) % N
         if (N-row) % 2 == 0:
             col = N - 1 - col
-
         return (row, col)
