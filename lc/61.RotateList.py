@@ -146,3 +146,55 @@ class Solution:
        
         return head
         
+        
+# This solution works !
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def rotateRight(self, head: ListNode, k: int) -> ListNode:
+        if not head:
+            return None
+        if k == 0:
+            return head
+        
+        length = 0
+        cur = head
+        while cur:
+            length += 1
+            cur = cur.next
+        
+        if length <2:
+            return head
+            
+        kth = k % length
+        before_kth = length - kth - 1
+        
+        if kth <1:
+            return head
+        '''
+        before: before_kth -> kth -> None
+        after: kth -> before_kth -> None
+        '''
+        cur = head
+
+        while before_kth:
+            before_kth -= 1
+            cur = cur.next 
+        
+        kthhead = cur.next 
+        cur.next = None
+        
+        cur= kthhead
+        while cur and cur.next:
+            cur = cur.next
+        lastnode = cur
+        
+        lastnode.next = head
+        head = kthhead
+        
+        return head
+        
