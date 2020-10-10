@@ -114,3 +114,65 @@ class Codec:
 # tree = ser.serialize(root)
 # ans = deser.deserialize(tree)
 # return ans
+
+
+
+# This solution works ! - optimization
+'''
+improved the deserialize method to use the fact that its a BST ! use lower bound and upper bound
+'''
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Codec:
+
+    def serialize(self, root: TreeNode) -> str:
+        """Encodes a tree to a single string.
+        """
+        def helper(cur):
+            if not cur:
+                return
+            ans.append(cur.val)
+            helper(cur.left)
+            helper(cur.right)
+            return ans 
+        ans = []
+        helper(root)
+        return ",".join([str(elem) for elem in ans])
+
+    def deserialize(self, data: str) -> TreeNode:
+        """Decodes your encoded data to tree.
+        """
+        if not data:
+            return None
+
+        data = data.split(',')
+        self.data = [int(elem) for elem in data]
+        self.idx = 0
+        
+        def helper(lower, upper):
+            if self.idx >= len(self.data):
+                return None
+            if lower < self.data[self.idx] < upper:
+                node = TreeNode(self.data[self.idx])
+                self.idx += 1
+                node.left = helper(lower, node.val)
+                node.right = helper(node.val, upper)
+                return node
+            else:
+                return None
+            
+        return helper(float('-inf'), float('inf'))
+    
+# Your Codec object will be instantiated and called as such:
+# Your Codec object will be instantiated and called as such:
+# ser = Codec()
+# deser = Codec()
+# tree = ser.serialize(root)
+# ans = deser.deserialize(tree)
+# return ans
