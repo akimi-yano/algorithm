@@ -82,6 +82,8 @@
 
 
 '''
+Bit wise brute force - there are only 15 nodes max
+use it (1) not use it (0) binary = 2^15 = about 2^10 * 2^5 = abour 1024 * 32 = about 1000 * 30 = about 30000 = about 10^4 - OK!
 1 list out all the combinations
 2 check if they are connected
 3 traverse DFS to get max depth /distance of each tree - use set for every traverse
