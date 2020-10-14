@@ -40,7 +40,8 @@
 
 
 # This solution works ! - brute force
-
+# Time: O(L * max(M, N) + MN)
+# Space: O(MN)
 class Solution:
     def oddCells(self, n: int, m: int, indices: List[List[int]]) -> int:
         
@@ -61,6 +62,8 @@ class Solution:
     
 
 # This solution works ! - bitwise :)
+# Time: O(L + MN)
+# Space: O(M + N)
 
 class Solution:
     def oddCells(self, n: int, m: int, indices: List[List[int]]) -> int:
