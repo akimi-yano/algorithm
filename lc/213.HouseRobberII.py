@@ -71,3 +71,36 @@ class Solution:
             return max_profit
         
         return helper(0, False)
+    
+    
+# This solution works too ! cleaner code :)
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        
+        memo = {}
+        def helper(i,start):
+            if (i,start) in memo:
+                return memo[(i,start)]
+            
+            if i == len(nums)-1:
+                if not start:
+                    memo[(i,start)] = nums[i]
+                    return nums[i]
+                else:
+                    memo[(i,start)] = 0
+                    return 0
+                
+            elif i > len(nums)-1:
+                memo[(i,start)] = 0
+                return 0
+            
+            max_profit = 0
+            
+            max_profit = max(max_profit, nums[i] + helper(i+2, start))
+            max_profit = max(max_profit, helper(i+1, start))
+            
+            memo[(i,start)] = max_profit
+            return max_profit
+        
+        return max(nums[0] + helper(2, True), helper(1, False)) 
