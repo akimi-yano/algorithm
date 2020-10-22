@@ -37,10 +37,19 @@
 
 # This solution works !:
 
+
+
 # The isBadVersion API is already defined for you.
 # @param version, an integer
 # @return an integer
 # def isBadVersion(version):
+
+
+'''
+It has to be: while left < right:
+Not this:     while left <= right:
+Because we are looking for the index which is left == right
+'''
 
 class Solution:
     def firstBadVersion(self, n):
@@ -48,11 +57,8 @@ class Solution:
         :type n: int
         :rtype: int
         """
-        left = 0
-        right = n
-        """
-        we TLE if left <= right ! we need to do left < right 
-        """ 
+        left = 1
+        right = n 
         while left < right:
             mid = (left + right) //2
             if isBadVersion(mid):

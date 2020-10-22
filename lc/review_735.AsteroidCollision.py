@@ -51,6 +51,11 @@ class Solution:
         and not when it breaks out of while loop due to break
         we only append the num when num's absolute value is larger than that of the last elem of the 
         stack. otherwise it keeps poping and append at the end
+        
+        Time: O(N) - because if its destroyed it is never reprocessed again - outer loop O(N) but inner loop does not 
+        happen every time - so it cannot be O(N) every time  so its O(N) ( amortized accross all runs for innter loop is O(1) )
+        
+        Space: O(N)
         '''
         stack = []
         for num in asteroids:
