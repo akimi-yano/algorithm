@@ -62,3 +62,32 @@ class Solution:
                 queue.append((node.left, level+1))
             if node.right:
                 queue.append((node.right, level+1))
+
+'''
+I can do this using DFS as well !!!
+'''
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        
+        def helper(cur): 
+            if not cur.left and not cur.right:
+                return 1
+            left = right = float('inf')
+            if cur.left:
+                left = helper(cur.left)
+            if cur.right:
+                right = helper(cur.right)
+
+            return min(left,right) +1
+            
+        if not root:
+            return 0
+        return helper(root)
+        
