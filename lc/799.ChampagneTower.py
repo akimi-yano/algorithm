@@ -143,3 +143,44 @@ class Solution:
         return ans
     
     
+# optimization - devision /2 once which could be more accurate
+
+class Solution:
+    def champagneTower(self, poured: int, query_row: int, query_glass: int) -> float:
+        '''
+        input : row, col poured
+        output: the status at [row][col]
+        to get this [row][col] we look at upper left + upper right (and add them)
+        upper left: [row-1][col-1]
+        upper right: [row-1][col]
+        the helper if going take each row and col of the upper ones and maybe poured (?)
+        this helper returns --- how many carryover from each uppers
+        answer is the answer between 0< real <1
+        '''
+        self.P = poured
+        self.memo = {}
+        if query_row == 0 and query_glass == 0:
+            return poured >= 1 
+        return min(1, (self.helper(query_row-1, query_glass-1) + 
+                       self.helper(query_row-1, query_glass))/2)
+    
+    
+    def helper(self, row, col):
+        key = (row, col)
+        if key in self.memo:
+            return self.memo[key]
+        
+        ans = 0
+        
+        if col < 0 or row < 0 or row+1 <= col:  
+            pass
+        elif row == 0 and col == 0:
+            ans = max(0, self.P -1) 
+        else:
+            ans = max(0, (self.helper(row-1, col-1) + 
+                          self.helper(row-1, col))/2 - 1) 
+            
+        self.memo[key] = ans
+        return ans
+    
+    
