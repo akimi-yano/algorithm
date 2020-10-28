@@ -111,3 +111,30 @@ class Solution:
             intersect = intersect.next
         return intersect
         
+        
+        
+'''
+math proof of why this approach works
+
+                          _____
+                         /     \  Ln
+        head____________answer  \
+                        \       /
+                H        X_____/   D
+
+        H: distance between head and answer node (which is the beginning of the intersection)
+        X: the intersection of the slow and fast pointers
+        Ln: L is the length of the cycle and n is the # of turns you made in the cycle
+        D: distance inside of L which is from L to X
+        Ln-D: distance between X and answer
+        
+        H+D: # of blocks slower node moved
+        2 * (H+D): # of blocks faster node moved
+        
+        H+D+L*n = 2 *(H+D)
+        L*n = 2H + 2D -H -D
+        L*n = H + D
+        H = L*n - D
+        
+        That is why by moving the slow pointer and new pointer from beginning, we can get to the same node which is answer!
+'''
