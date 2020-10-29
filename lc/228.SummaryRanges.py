@@ -86,3 +86,28 @@ class Solution:
             ans.append(val) 
         
         return ans
+
+# This solution works ! Code after code review
+
+class Solution:
+    def summaryRanges(self, nums: List[int]) -> List[str]:
+        ans = []
+        
+        if not nums:
+            return ans
+        
+        val = prev = nums[0]
+
+        for i in range(1, len(nums)):
+            if prev + 1 == nums[i]:
+                prev = nums[i]
+            else:
+                ans.append(self.stringify(val, prev))
+                val = prev = nums[i]
+        ans.append(self.stringify(val, prev))
+        return ans
+
+    def stringify(self, val, prev):
+        if val == prev:
+            return str(val)
+        return str(val) + "->" + str(prev)
