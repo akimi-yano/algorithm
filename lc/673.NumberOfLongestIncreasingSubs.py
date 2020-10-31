@@ -117,6 +117,7 @@ recursion + memorization
 save the information of i and prev
 how many i are there? - len(nums) - N
 how many prev are there? - len(nums) - N
+so time and space complexity is N * N = N^2
 Time complexity: O(N^2) after memorization (its exponential before memorization)
 Space complexity: O(N^2) which is a combination of the informaiton we store
 there are multiple cases, and its important to write down and handle all the cases patiently !
