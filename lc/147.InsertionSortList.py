@@ -56,3 +56,29 @@ class Solution:
             i += 1
         return new_head
             
+            
+# This solution works !
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def insertionSortList(self, head: ListNode) -> ListNode:
+        dummy = ListNode(None)
+        new_cur = dummy
+        cur = head
+        while cur:
+            node = cur
+            head = cur.next
+            new_cur = dummy
+            while new_cur and new_cur.next and new_cur.next.val <= node.val:
+                new_cur = new_cur.next
+            next_node = new_cur.next
+            new_cur.next = node
+            node.next = next_node
+            
+            cur = head
+            
+        return dummy.next
