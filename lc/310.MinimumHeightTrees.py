@@ -287,3 +287,44 @@ class Solution:
 # In addition, we use a queue to keep track of the leaves nodes. In the worst case, the nodes form a star shape, with one centroid and the rest of the nodes as leaves nodes. In this case, we would need |V|-1∣V∣−1 space for the queue.
 
 # To sum up, the overall space complexity of the algorithm is also \mathcal{O}(|V|)O(∣V∣).
+
+
+
+# This solution works !!!! :)
+
+class Solution:
+    def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
+        # edge case
+        if n <= 2:
+            return [i for i in range(n)]
+        
+        # make adj list
+        adj = {}
+        for n1, n2 in edges:
+            if n1 not in adj:
+                adj[n1] = set([])
+            if n2 not in adj:
+                adj[n2] = set([])
+            adj[n1].add(n2)
+            adj[n2].add(n1)
+        
+        # save the leaves to start with
+        leaves = []
+        for k, v in adj.items():
+            if len(v) == 1:
+                leaves.append(k)
+                
+        # BFS topological 
+        remaining = n
+        while remaining >2:
+            new_leaves = []
+            while leaves:
+                node = leaves.pop()
+                remaining -= len(adj[node])
+                for neighbor in adj[node]:
+                    adj[neighbor].remove(node)
+                    if len(adj[neighbor]) == 1:
+                        new_leaves.append(neighbor)
+            # swap
+            leaves = new_leaves
+        return leaves       
