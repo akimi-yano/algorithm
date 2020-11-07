@@ -56,3 +56,15 @@ class Solution:
             else:
                 odd += 1
         return min(odd, even)
+
+
+# This solution works !
+
+class Solution:
+    def minCostToMoveChips(self, position: List[int]) -> int:
+        odd = 0
+        even = 0
+        for pos in position:
+            if pos % 2 == 0:
+                even += 1
+        return min(even, len(position)-even)
