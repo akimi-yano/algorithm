@@ -106,3 +106,81 @@ class Solution:
         head = prev
         return head
         
+        
+# This solution works too:
+    
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def addTwoNumbers(self, l1, l2):
+        a1, a2 = [], []
+        while l1:
+            a1.append(l1.val)
+            l1 = l1.next
+        while l2:
+            a2.append(l2.val)
+            l2 = l2.next  
+        
+        nxt, carry = None, 0
+        while a1 or a2 or carry:
+            val = carry
+            if a1:
+                val += a1.pop()
+            if a2:
+                val += a2.pop()
+            val, carry = val % 10, val // 10
+            nxt = ListNode(val, nxt)
+        return nxt 
+    
+
+# This solution works ! little oprimized !
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        if not l1:
+            return l2
+        if not l2:
+            return l1
+        rl1 =self.reverse(l1)
+        rl2 =self.reverse(l2)
+        cur1 = rl1
+        cur2 = rl2
+        val, carry = (cur1.val + cur2.val) % 10, (cur1.val + cur2.val) // 10
+        cur = head = ListNode(val)
+        cur1, cur2 = cur1.next, cur2.next
+        
+        while cur1 or cur2 or carry:  
+            addition = carry
+            if cur1:
+                addition += cur1.val
+                cur1 = cur1.next
+            if cur2:
+                addition += cur2.val
+                cur2 = cur2.next
+            value = addition % 10
+            cur.next = ListNode(value) 
+            cur = cur.next
+            carry = addition // 10
+        
+        return self.reverse(head)
+    
+    def reverse(self, head):
+        cur = head 
+        prev = None
+        while cur:
+            next_node = cur.next
+            cur.next = prev
+            prev = cur
+            cur = next_node
+        head = prev
+        return head
+        
+    

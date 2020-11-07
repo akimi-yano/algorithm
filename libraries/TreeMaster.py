@@ -14,7 +14,7 @@ J: 8-1 Link-Cut Tree
 K: 8-2 Link-Cut Tree
 '''
 
-# UNION FIND　　
+# << UNION FIND >>　　
 
 # A: 3-1 Union Find - basic
 def union_find(n, edges):
@@ -68,8 +68,9 @@ union_find(5,edges)
             #  5
 
 
-# SEGMENT TREE 
+# << SEGMENT TREE >>
 
+# C: 4-1 Segment Tree
 # SEG 木　列を管理するデータ構造
 # できる操作　
 # １：区間の更新　（足し算、上書き）
@@ -94,3 +95,67 @@ union_find(5,edges)
 # the updating itself is O(1)
 
 # [a~b) -> a以上b未満　*bは入らない
+
+
+# D: 4-2 Segment Tree
+'''
+adding the value at the index and return the sum
+'''
+
+class SEG_TREE:
+    def __init__(self, nums):
+        self.SEG_LEN = 1  << 2
+        self.seg = [0 for _ in range(self.SEG_LEN * 2)]
+
+        for i, value in enumerate(nums):
+            self.add(i, value)
+            print(self.seg, i, value)
+            
+    # one point 
+    def add(self, idx, val):
+        idx += self.SEG_LEN
+        self.seg[idx] +=  val
+        while True:
+            idx //= 2
+            if idx == 0: 
+                break
+            self.seg[idx] = self.seg[idx * 2] + self.seg[idx * 2 + 1]
+            
+    # range 
+    def sum(self, l,r):
+        r += 1
+        l += self.SEG_LEN
+        r += self.SEG_LEN
+        ans = 0
+        while l < r:
+            if l %  2  == 1:
+                print(l)
+                ans += self.seg[l]
+                l+=1
+            l//=2
+            if r %  2  == 1:
+                ans += self.seg[r-1]
+                r-=1
+            r//=2
+        return  ans  
+
+seg_tree = SEG_TREE([1, 3, 5])
+# Given nums = [1, 3, 5]
+
+print(seg_tree.sum(0, 2))
+# sumRange(0, 2) -> 9
+
+seg_tree.add(1,-3)
+seg_tree.add(1,2)
+# update(1, 2)
+
+print(seg_tree.sum(0, 2))
+# Given nums = [1, 2, 5]
+# sumRange(0, 2) -> 8
+
+
+
+# E: 4-3 Segment Tree
+
+
+# F: 4-4 Segment Tree
