@@ -80,23 +80,33 @@ class Solution:
     
 class Solution:
     def createSortedArray(self, A):
+        # Size of the array is the max element
         m = max(A)
+        # Make an array of size m. Each index represents the num from the instruction.
         c = [0] * (m + 1)
 
         def update(x):
+            # also can be written as: while x < len(c):
             while (x <= m):
+                # add 1 to the index x, and move to the next index by adding the
+                # LSB.
                 c[x] += 1
+                # move "left-up"
                 x += x & -x
 
         def get(x):
             res = 0
             while (x > 0):
+                # calculate the prefix sum by adding the value at index x and
+                # moving to the "parent" by subtracting the LSB.
                 res += c[x]
+                # move up to parent
                 x -= x & -x
             return res
 
         res = 0
         for i, a in enumerate(A):
+            # take the min between the left prefix sum and (# of elems - right prefix sum)
             res += min(get(a - 1), i - get(a))
             update(a)
         return res % (10**9 + 7)
