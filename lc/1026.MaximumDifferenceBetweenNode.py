@@ -99,4 +99,28 @@ class Solution:
                 max_diff = max(max_diff,helper(cur.right,  largest, smallest))
             return max_diff
         return helper(root, float('-inf'), float('inf'))
+    
+# Optimization ! removed the line 87-91! This works !!!
+'''
+implicit basecase -> not calling helper and return at the end (so no need to have if statement in the beginning)
+'''
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxAncestorDiff(self, root: TreeNode) -> int:
+        def helper(cur, largest, smallest):
+            largest = max(largest, cur.val)
+            smallest = min(smallest, cur.val)
+            max_diff = abs(largest-smallest)
+            if cur.left:
+                max_diff = max(max_diff,helper(cur.left, largest, smallest))
+            if cur.right:
+                max_diff = max(max_diff,helper(cur.right,  largest, smallest))
+            return max_diff
+        return helper(root, float('-inf'), float('inf'))
         
