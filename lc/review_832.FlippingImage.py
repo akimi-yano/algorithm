@@ -49,3 +49,12 @@ class Solution:
                 A[row][col] ^= 1
                 
         return A
+    
+
+
+# This solution works ! - 1 liner
+
+
+class Solution:
+    def flipAndInvertImage(self, A: List[List[int]]) -> List[List[int]]:
+        return [[col^1 for col in reversed(row)] for row in A]
