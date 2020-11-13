@@ -67,4 +67,51 @@ class Solution:
             return count 
         
         return helper(0, 0)
+
+# This solution works !
+'''
+optimization: preprocessing the dictionary with value with all the indexes ! 
+'''
+
+class Solution:
+    def maxUncrossedLines(self, A: List[int], B: List[int]) -> int:
+        memo = {}
+        num_locs = {}
         
+        def search(idxs, prev_idx):
+            left, right = 0, len(idxs) - 1
+            while left < right:
+                mid = (left + right) // 2
+                if idxs[mid] <= prev_idx:
+                    left = mid + 1
+                else:
+                    right = mid
+            return idxs[left] if idxs[left] > prev_idx else None
+
+        def helper(aidx, prev_bidx):
+            key = (aidx, prev_bidx)
+            if key in memo:
+                return memo[key]
+
+            ans = 0
+            if aidx >= len(A):
+                pass
+            else:
+                elem = A[aidx]
+                # option 1: skip A[aidx]
+                ans = helper(aidx+1, prev_bidx)
+                # option 2: pair A[aidx]
+                if elem in num_locs:
+                    bidxs = num_locs[elem]
+                    bidx = search(bidxs, prev_bidx)
+                    if bidx is not None:
+                        ans = max(ans, 1 + helper(aidx + 1, bidx))
+            memo[key] = ans
+            return ans
+        
+        for i, b in enumerate(B):
+            if b not in num_locs:
+                num_locs[b] = []
+            num_locs[b].append(i)
+        
+        return helper(0, -1)
