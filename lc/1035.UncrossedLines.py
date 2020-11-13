@@ -18,7 +18,6 @@
 
 # Return the maximum number of connecting lines we can draw in this way.
 
- 
 
 # Example 1:
 
@@ -35,7 +34,7 @@
 
 # Input: A = [1,3,7,1,7,5], B = [1,9,2,5,1]
 # Output: 2
- 
+
 
 # Note:
 
@@ -47,7 +46,7 @@
 
 class Solution:
     def maxUncrossedLines(self, A: List[int], B: List[int]) -> int:
-   
+
         memo = {}
         def helper(i, j):
             key = (i, j)
