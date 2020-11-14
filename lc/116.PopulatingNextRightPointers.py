@@ -82,4 +82,35 @@ class Solution:
         
         return root
         
+
+# This solution works !
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+
+class Solution:
+    def connect(self, root: 'Node') -> 'Node':
+        if root is None:
+            return root
         
+        parent, child = root, root.left
+        while child:
+            next_parent = child
+            
+            while parent:
+                child.next = parent.right
+                child = child.next
+                parent = parent.next
+                if parent:
+                    child.next = parent.left
+                child = child.next
+            
+            parent, child = next_parent,  next_parent.left
+        return root
