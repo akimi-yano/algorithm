@@ -100,6 +100,9 @@
 #         return ans if ans != float('inf') else -1
             
             
+            
+# This solution works !
+
 '''
 minimum # of jumps -> think of BFS shortest path !!!
 

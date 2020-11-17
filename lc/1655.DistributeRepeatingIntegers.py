@@ -60,6 +60,8 @@ class Solution:
         remove an O(m) factor by precalculating subset sums
         iterating through all submasks of all masks is O(3^m)
         https://cp-algorithms.com/algebra/all-submasks.html
+        
+        formula to check all the cases: submask = (submask-1) & mask
         '''
         c = Counter(a)
         a = sorted(c.values())

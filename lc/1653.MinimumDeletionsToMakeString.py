@@ -195,6 +195,7 @@ think if we should remove cur when prev is A and  cur is B
 # This solution works !!!
 '''
 partition the string and for each border/ partition, calcurate how many As and Bs you need to delete and get the min
+user a counter dict and add and subtract as you see an element
 '''
 
 from collections import Counter
