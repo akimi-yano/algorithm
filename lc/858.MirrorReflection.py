@@ -48,3 +48,31 @@ class Solution:
             return 0
         else:
             return 1
+        
+        
+# This solution works !
+
+class Solution:
+    def mirrorReflection(self, p: int, q: int) -> int:
+        right = False
+        y = 0
+        delta = q
+        while True:
+            y += delta
+            right ^= True
+            if y > p:
+                y -= (y-p) * 2
+                delta *= -1
+            elif y < 0:
+                y += (-y) * 2
+                delta *= -1
+            
+            if y == p:
+                if right:
+                    return 1
+                else:
+                    return 2
+            if y == 0:
+                if right:
+                    return 0
+                # delta *= -1
