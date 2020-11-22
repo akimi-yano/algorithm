@@ -52,3 +52,26 @@ class Solution:
             all_types.add(ans)
         return len(all_types)
         
+        
+# This solution works - optimization
+
+class Solution:
+    morse = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+    def uniqueMorseRepresentations(self, words: List[str]) -> int:
+
+        all_types = set([])
+        for word in words:
+            ans = ""
+            for char in word:
+                ans += Solution.morse[ord(char)-ord('a')]
+            all_types.add(ans)
+        return len(all_types)
+        
+        
+# This solution works - 1 liner 
+
+class Solution:
+    morse = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+    def uniqueMorseRepresentations(self, words: List[str]) -> int:
+        return len({''.join(Solution.morse[ord(char)-ord('a')] for char in word) for word in words})
+        
