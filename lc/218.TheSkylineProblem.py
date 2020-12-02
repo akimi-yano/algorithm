@@ -90,4 +90,52 @@ class Solution:
             if not ans or ans[-1][1] != active_heights[-1]:
                 ans.append((x, active_heights[-1]))
         return ans
+    
+    
+# This solution works ! - This is the most intuitive way !!!
+
+# dont try to think of a most efficient way - first solve it 
+# how we can find the tallest here ? wha tis the data structure
+
+# Time: O(NlogN)
+# Space: O(N)
+
+from sortedcontainers import SortedList
+
+class Solution:
+    def getSkyline(self, buildings: List[List[int]]) -> List[List[int]]:
+        events = {}
+        # saving y of each x (start at the left arr and end at the right arr)
+        for start, end, height in buildings:
+            if start not in events:
+                events[start] = ([], [])
+            if end not in events:
+                events[end] = ([], [])
+            events[start][0].append(height)
+            events[end][1].append(height)
         
+        # print(events)
+        heights_list = SortedList()
+        # start with height = 0
+        last_height = 0
+        
+        ans = []
+        # we can use sorted on the key of dictionary to sort and look from smaller x to larger
+        for x in sorted(events):
+            # for each x, we have 2 arrs: left - heights of start; right - heights of end
+            start_heights, end_heights = events[x]
+            # iterate through  both arrs and add them to sorted list for start
+            for height in start_heights:
+                heights_list.add(height)
+            # remove them for end
+            for height in end_heights:
+                heights_list.remove(height)
+            
+            # the height_list could be empty then its 0 else check to see if the max_height is different from previous max_height
+            # if its different from previous heiught, append it to answer arr
+            # update the last height 
+            max_height = heights_list[-1] if heights_list else 0
+            if max_height != last_height:
+                ans.append([x, max_height])
+                last_height = max_height
+        return ans
