@@ -58,3 +58,38 @@ class Solution:
             cur = cur.right
         return root
             
+            
+# This solution works 
+'''
+dfs inorder traversal - passing cur and prev 
+the prev.right is cur
+'''
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def increasingBST(self, root: TreeNode) -> TreeNode:
+        self.helper(root, None)
+        return self.head
+    
+    def helper(self, cur, prev):
+        if cur is None:
+            return prev
+        
+        # left
+        new_prev = self.helper(cur.left, prev)
+
+        cur.left = None
+        
+        # yourself
+        if new_prev is None:
+            self.head = cur
+        else:
+            new_prev.right = cur
+            
+        # right
+        return self.helper(cur.right, cur)
