@@ -70,3 +70,31 @@ class Solution:
         else:
             return -1
 
+
+
+# more optimal solution: we can check only divisors which are less than square root of n: 
+# each of them will have pair: for any d divisor of n, number n/d is also divisor of n. 
+# There is one exception, when d = n/d and we do not have pair. 
+# Let us find all factors before square root of n and put the into list, 
+# and also put all divisors which are after square root of n to another list. 
+# Then we combine these two lists and return element number k.
+
+# Complexity: time and space complexity is O(sqrt(n)), because there will be at most 2*sqrt(n) factors of n.
+
+class Solution:
+    def kthFactor(self, n, k):
+        f1, f2 = [], []
+        for s in range(1, int(sqrt(n)) + 1 ):
+            if n % s == 0:
+                f1 += [s]
+                f2 += [n//s]
+                
+        if f1[-1] == f2[-1]: f2.pop()
+            
+        factors = f1 + f2[::-1]
+        return -1 if len(factors) < k else factors[k-1]
+    
+# it works before they come as a pair so put both of them into array
+# until square root of that number
+# if the last numbers are the same, only append one of them
+# put together the array and return 
