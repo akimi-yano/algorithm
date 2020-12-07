@@ -148,3 +148,39 @@ class Solution:
         
         res = helper(tuple(used))
         return res if res != float('inf') else -1
+
+
+# This solution works ! - bitwise optimization - just use bit instead of an array
+
+class Solution:
+    def minimumIncompatibility(self, nums: List[int], k: int) -> int:
+        self.nums = nums
+        self.N = len(self.nums)
+        self.per_group = self.N // k
+        # used = [0 for _ in range(self.N)]
+        
+        @lru_cache(None)
+        def helper(used):
+            zero_idxs = [i for i in range(self.N) if used & (1 << i) == 0]
+            if len(zero_idxs) < 1:
+                return 0
+            ans = float('inf')
+            for chosen_idxs in itertools.combinations(zero_idxs, self.per_group):
+                subset = set([self.nums[idx] for idx in chosen_idxs])
+                if len(subset) < self.per_group:
+                    continue
+                incompatibility = max(subset) - min(subset)
+                
+                # new_used = list(used)
+                new_used = used
+                
+                for idx in chosen_idxs:
+                    # new_used[idx] = 1
+                    new_used |= (1 << idx)
+                
+                ans = min(ans, incompatibility + helper(new_used))
+            return ans
+        
+        res = helper(0)
+        return res if res != float('inf') else -1
+                  
