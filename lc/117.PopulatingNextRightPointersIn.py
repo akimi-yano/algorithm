@@ -75,4 +75,44 @@ class Solution:
             queue = new_queue
         return root
             
+
+# this solution works - constant space solution
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+
+class Solution:
+    def connect(self, root: 'Node') -> 'Node':
+        if root is None:
+            return root
         
+        parent = root
+
+        while True:
+            start_child, parent = self.next_child(parent, None)
+            if start_child is None:
+                break
+            cur_child = start_child
+            while cur_child is not None:
+                nxt, parent = self.next_child(parent, cur_child)
+                cur_child.next = nxt
+                cur_child = nxt
+            parent = start_child
+        return root
+    
+    def next_child(self, parent, prev_child):
+        while parent is not None:
+            if parent.left is not None and prev_child != parent.left:
+                return parent.left, parent
+            elif parent.right is not None and prev_child != parent.right:
+                return parent.right, parent.next
+            else:
+                parent = parent.next
+        return None, None
