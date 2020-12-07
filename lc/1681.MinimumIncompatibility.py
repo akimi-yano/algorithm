@@ -117,7 +117,34 @@ class Solution:
 
 
 
+# This solution works ! : lru cache + tuple casting + binary tracking for used ones + itertools.combintations(array, per_group)
 
-'''
-0
-'''
+class Solution:
+    def minimumIncompatibility(self, nums: List[int], k: int) -> int:
+        self.nums = nums
+        self.N = len(self.nums)
+        self.per_group = self.N // k
+        used = [0 for _ in range(self.N)]
+        
+        @lru_cache(None)
+        def helper(used):
+            zero_idxs = [i for i in range(self.N) if used[i] == 0]
+            if sum(used) == self.N:
+                return 0
+            ans = float('inf')
+            for chosen_idxs in itertools.combinations(zero_idxs, self.per_group):
+                subset = set([self.nums[idx] for idx in chosen_idxs])
+                if len(subset) < self.per_group:
+                    continue
+                incompatibility = max(subset) - min(subset)
+                
+                new_used = list(used)
+                
+                for idx in chosen_idxs:
+                    new_used[idx] = 1
+                
+                ans = min(ans, incompatibility + helper(tuple(new_used)))
+            return ans
+        
+        res = helper(tuple(used))
+        return res if res != float('inf') else -1
