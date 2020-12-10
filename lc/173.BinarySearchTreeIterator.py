@@ -53,7 +53,7 @@
 # Could you implement next() and hasNext() to run in average O(1) time and use O(h) memory, where h is the height of the tree?
 
 
-# This solution works !
+# This solution works ! - but space O(N) and time O(N)
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -84,6 +84,41 @@ class BSTIterator:
     def hasNext(self) -> bool:
         return self.idx < len(self.inorder)-1
             
+
+
+# Your BSTIterator object will be instantiated and called as such:
+# obj = BSTIterator(root)
+# param_1 = obj.next()
+# param_2 = obj.hasNext()
+
+
+# This solution works ! Time: O(N) and Space: O(logN) which is a depth of tree
+# use stack and recursion 
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class BSTIterator:
+
+    def __init__(self, root: TreeNode):
+        self.stack = []
+        self.add(root)
+            
+    def next(self) -> int:
+        node = self.stack.pop()
+        self.add(node.right)
+        return node.val
+
+    def hasNext(self) -> bool:
+        return len(self.stack) > 0
+    
+    def add(self, node):
+        if node:
+            self.stack.append(node)
+            self.add(node.left)
 
 
 # Your BSTIterator object will be instantiated and called as such:
