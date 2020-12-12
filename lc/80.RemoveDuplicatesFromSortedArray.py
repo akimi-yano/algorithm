@@ -75,4 +75,27 @@ class Solution:
             
         return len(nums)
             
-            
+
+# optimization : without actually popping elements from list, 
+# we can just return the length and solution will only check upto the length of the list 
+
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        prev = float('inf')
+        count = 1
+        change_idx = 0
+        for num in nums:
+            if prev == num:
+                count += 1
+                if count > 2:
+                    pass
+                else:
+                    nums[change_idx] = num
+                    change_idx += 1
+            else:
+                count = 1
+                prev = num
+                nums[change_idx] = num
+                change_idx += 1
+                
+        return change_idx             
