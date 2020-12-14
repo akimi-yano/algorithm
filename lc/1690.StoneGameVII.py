@@ -41,6 +41,52 @@
 # 2 <= n <= 1000
 # 1 <= stones[i] <= 1000
 
+# This approach does not work :   - need to do dp for both Alice's and Bob's
+# from collections import deque
+# class Solution:
+#     def stoneGameVII(self, stones: List[int]) -> int:
+#         queue = deque(stones)
+#         total = sum(stones)
+#         # print(total)
+#         # self.A = 0
+#         return self.minimize_diff(queue, total)
+        
+    
+#     def minimize_diff(self, queue, total):
+#         if len(queue) <= 1:
+#             return 0
+#         # self.A += self.maximize_diff(queue, total)    
+#         left = queue[0]
+#         right = queue[-1]
+#         if left < right:
+#             point = queue.popleft()
+#         else:
+#             point = queue.pop()    
+#         total -= point
+#         A = total
+       
+#         min_diff = float('inf')
+#         if queue:
+#             min_diff = min(min_diff, A - (total-queue[0] + self.minimize_diff(deque(list(queue)[1:]), total-queue[0])))
+#         if queue:
+#             min_diff = min(min_diff, A - (total-queue[-1] + self.minimize_diff(deque(list(queue)[:-1]), total-queue[-1])))
+        
+#         return min_diff
+        
+#     def maximize_diff(self, queue, total):
+#         if len(queue) <= 1:
+#             point = queue.pop()
+#         else:
+#             left = queue[0]
+#             right = queue[-1]
+#             if left < right:
+#                 point = queue.popleft()
+#             else:
+#                 point = queue.pop()
+                
+#         total -= point
+#         return total
+
 
 # This approach does not work - TLE :
 
