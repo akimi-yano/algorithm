@@ -82,3 +82,27 @@ class Solution:
             K %= lens[i]
             if K == 0 and S[i-1].isalpha():
                 return S[i-1]
+
+
+# This solution works ! - optimization 
+
+class Solution:
+    def decodeAtIndex(self, S: str, K: int) -> str:
+        length = 0
+        for c in S:
+            if c.isdigit():
+                length *= int(c)
+            else:
+                length += 1
+        
+        for c in reversed(S):
+            K %= length
+            if not K and not c.isdigit():
+                return c
+
+            if c.isdigit():
+                length //= int(c)
+            else:
+                length -= 1
+                
+        return None
