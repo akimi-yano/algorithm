@@ -63,6 +63,5 @@ class Solution:
             else:
                 is_balanced = False
             
-            return max(left, right) + 1, is_balanced & left_balanced * right_balanced
+            return max(left, right) + 1, is_balanced & left_balanced & right_balanced
         return helper(root)[1]
-            
