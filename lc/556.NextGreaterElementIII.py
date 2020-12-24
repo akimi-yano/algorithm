@@ -72,6 +72,12 @@ class Solution:
 
 # This solution works ! - faster - array to store the count and back tracking with recursion - break as soon as succeeding 
 
+'''
+important:
+check the number from the most significant digit to least significant digit
+it needs to be the same or larger
+'''
+
 class Solution:
     MAX = 1 << 31
     def nextGreaterElement(self, n: int) -> int:
