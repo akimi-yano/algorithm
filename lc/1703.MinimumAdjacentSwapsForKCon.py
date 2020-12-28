@@ -130,3 +130,50 @@ class Solution:
             
         return minres
 
+
+
+
+# This solution works !
+
+class Solution:
+    def minMoves(self, nums: List[int], k: int) -> int:
+        # extraxt just the indexes of 1s (we are no longer using nums after this)
+        ones_indexes = [i for i in range(len(nums)) if nums[i]]
+        
+        # find the middle of k and make left, mid, right 
+        k_mid = k//2
+        left = deque(ones_indexes[:k_mid])
+        mid = ones_indexes[k_mid]
+        right = deque(ones_indexes[k_mid+1:k_mid+1+(k-k_mid-1)])
+        
+        # get sum of left and right - this is the cacluculation to move everything to the center if we do rsum - lsum
+        lsum = sum(left)
+        rsum = sum(right)
+        
+        # everything does not fit in center so we move the elements back to where they should be by making the adjust and subtract
+        adjust = 2 * sum(i for i in range(1, k_mid + 1))
+        if k % 2 == 0:
+            adjust = adjust - k_mid - mid
+        best = rsum - lsum - adjust
+        
+        # now the first window is set, we are going to slide the window from k to the rest of the ones_indexes arrays
+        for i in range(k, len(ones_indexes)):
+            # useing deque to know what is the next one to add and subtract
+            # right: add nxt, remove newmid
+            # left : add mid, remove removed
+            nxt = ones_indexes[i]
+            right.append(nxt)
+            new_mid = right.popleft()
+            left.append(mid)
+            removed = left.popleft()
+            
+            rsum = rsum + nxt - new_mid
+            lsum = lsum + mid - removed
+            # change adjust for k is even case - if its even, this adjust changes but if its odd, it stays the same
+            if k % 2 == 0:
+                adjust = adjust + mid - new_mid
+            # keep track of the best doing rsum - lsum - adjust
+            best = min(best, rsum - lsum - adjust)
+            
+            mid = new_mid
+        return best
