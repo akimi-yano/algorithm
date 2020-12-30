@@ -69,3 +69,27 @@ class Solution:
             return helper(cur.left, newcounts) + helper(cur.right, newcounts)
         
         return helper(root, Counter())
+    
+    
+# This solution works - optimization
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+from collections import Counter
+class Solution:
+    def pseudoPalindromicPaths (self, root: TreeNode) -> int:
+        
+        def helper(cur, seen):
+            if not cur:
+                return 0
+            
+            if not cur.left and not cur.right:
+            
+                return 1 if len(seen ^ set([cur.val])) <= 1 else 0
+            return helper(cur.left, seen ^ set([cur.val])) + helper(cur.right, seen ^ set([cur.val]))
+        
+        return helper(root, set([]))
