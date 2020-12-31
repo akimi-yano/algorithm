@@ -92,5 +92,46 @@ class Solution:
         for row in range(R):
             for col in range(C):
                 board[row][col] = temp_a[row][col]
+
+# This solution works - optimization
+'''
+3 = from 1 to 0
+2 = from 0 to 1
+
+two path: first path to change 0 and 1 to 2 or 3 and second path to change 2 and 3 back to 1 or 0
+'''
+class Solution:
+    def gameOfLife(self, board: List[List[int]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        R = len(board)
+        C = len(board[0])
+        for row in range(R):
+            for col in range(C):
+                neib = 0
+                for new_row in (row-1, row, row+1):
+                    for new_col in (col-1, col, col+1):
+                        if new_row == row and new_col == col:
+                            continue
+                        if 0 <= new_row < R and 0 <= new_col < C: 
+                            if board[new_row][new_col] in (1, 3):
+                                neib += 1
+                
+                if board[row][col] == 0:
+                    if neib == 3:
+                        board[row][col] = 2  
+
+                elif board[row][col] == 1:
+                    if neib < 2 or neib > 3:
+                        board[row][col] = 3
         
+        for row in range(R):
+            for col in range(C):
+                if board[row][col] == 3:
+                    board[row][col] = 0
+                elif board[row][col] == 2:
+                    board[row][col] = 1
+
+
 
