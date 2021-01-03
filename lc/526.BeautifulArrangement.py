@@ -37,7 +37,7 @@
 
 # 1 <= n <= 15
 
-# This solution works
+# This solution works - needs optimization
 
 class Solution:
     def countArrangement(self, n: int) -> int:
@@ -55,3 +55,36 @@ class Solution:
         ways = 0
         helper(set([]))
         return ways
+    
+# This solution works - still needs optimization
+
+class Solution:
+    def countArrangement(self, n: int) -> int:
+        def helper(seen):
+            nonlocal n
+            if len(seen) == n:
+                return 1
+            idx = len(seen) +1
+            ways = 0
+            for i in range(1, n+1):
+                if ((i % idx == 0) or (idx % i == 0)) and i not in seen:
+                    ways += helper(seen|set([i]))   
+            return ways 
+        return helper(set([]))
+
+# This solution works - ! optimized with bitmask and cache xD
+
+class Solution:
+    def countArrangement(self, n: int) -> int:
+        @lru_cache(None)
+        def helper(bitmask, idx):
+            nonlocal n
+            if bitmask == 0:
+                return 1
+            ways = 0
+            for num in range(1, n+1):
+                if ((num % idx == 0) or (idx % num == 0)) and (bitmask & (1 << (num-1))):
+                    ways += helper((bitmask ^ (1 << (num-1))), idx+1)   
+            return ways 
+        return helper((1<<n)-1, 1)
+    
