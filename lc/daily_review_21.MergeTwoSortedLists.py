@@ -57,3 +57,46 @@ class Solution:
                 return cur2
             
         return helper(l1, l2)
+    
+
+# This solution works ! - optimization for constant space !
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
+        if not l1 or not l2:
+            return l1 or l2
+        cur1 = l1
+        cur2 = l2
+        head = None
+        while cur1 and cur2:
+            if cur1.val < cur2.val:
+                if not head:
+                    head = cur1
+                    cur = head
+                else:
+                    cur.next = cur1
+                    cur = cur.next
+                cur1 = cur1.next
+            else:
+                if not head:
+                    head = cur2
+                    cur = head
+                else:
+                    cur.next = cur2
+                    cur = cur.next
+                cur2 = cur2.next
+        while cur1:
+            cur.next = cur1
+            cur = cur.next
+            cur1 = cur1.next
+        while cur2:
+            cur.next = cur2
+            cur = cur.next
+            cur2 = cur2.next
+        
+        return head
