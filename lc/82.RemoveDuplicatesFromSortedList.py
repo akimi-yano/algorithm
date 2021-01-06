@@ -64,7 +64,31 @@ class Solution:
     
             cur = cur.next
         return new_head
-    
+
+# This solution works !
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if not head:
+            return head
+        dummy = ListNode(float('inf'), head)
+        prev, cur = dummy, head 
+        while cur:
+            if cur.next and cur.val == cur.next.val:
+                # duplicates - delete them
+                while cur.next and cur.val == cur.next.val:
+                    cur = cur.next
+                # move one more time
+                cur = cur.next
+                prev.next = cur
+            else:
+                prev, cur = cur, cur.next
+        return dummy.next
     
 # This approach does not work
 # Definition for singly-linked list.
