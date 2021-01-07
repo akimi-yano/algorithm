@@ -43,4 +43,20 @@ class Solution:
                 k -= 1
                 if k == 0:
                     return i
+
+
+# This solution works ! - Optimization - Constant space
+class Solution:
+    def findKthPositive(self, arr: List[int], k: int) -> int:
+        prev = 0
+        # k = 200
+        # arr = [100,...]
+
+        for cur in arr:
+            if prev + k < cur:
+                break
+            skipped = cur - prev - 1
+            k -= skipped
+            prev = cur
+        return prev + k
         
