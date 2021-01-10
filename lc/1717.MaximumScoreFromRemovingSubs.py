@@ -79,3 +79,63 @@ class Solution:
         return total
                     
             
+
+# This approach does not work
+# class Solution:
+#     def maximumGain(self, s: str, x: int, y: int) -> int:
+#         def helper(i):
+#             if i > len(s)-2:
+#                 return 0
+#             points = 0
+#             sequence = s[i:i+2]
+#             if sequence == "ab":
+#                 points = max(points, x + helper(i+1)) 
+#             elif sequence == "ba":
+#                 points = max(points, y + helper(i+1)) 
+#             points = max(points, helper(i+1)) 
+#             return points
+#         return helper(0)
+
+# This approach does not work
+# class Solution:
+#     def maximumGain(self, s: str, x: int, y: int) -> int:
+#         first = second = None
+#         if x > y:
+#             first, second = "ab", "ba"
+#         else:
+#             first, second = "ba", "ab"
+        
+#         memo = {first:[], second:[]}
+#         for i in range(len(s)-1):
+#             if s[i:i+2] == first:
+#                 memo[first].append((i,i+1))
+#             elif s[i:i+2] == second:
+#                 memo[second].append((i,i+1))
+        
+#         total = 0
+
+#         for start, end in memo[first]:
+#             total += max(x, y)
+#             nextstart = start-1
+#             nextend = end+1
+#             while nextstart >= 0 and nextend < len(s) and s[nextstart] + s[nextend] in ("ab", "ba"):
+#                 if s[nextstart] + s[nextend] == first:
+#                     total += max(x, y)
+#                 elif s[nextstart] + s[nextend] == second:
+#                     total += min(x, y)
+#                 nextstart -= 1
+#                 nextend += 1
+
+#         for start, end in memo[second]:
+#             total += min(x, y)
+#             nextstart = start-1
+#             nextend = end+1
+#             while nextstart >= 0 and nextend < len(s) and s[nextstart] + s[nextend] in ("ab", "ba"):
+#                 if s[nextstart] + s[nextend] == first:
+#                     total += max(x, y)
+#                 elif s[nextstart] + s[nextend] == second:
+#                     total += min(x, y)
+#                 nextstart -= 1
+#                 nextend += 1
+
+#         return total
