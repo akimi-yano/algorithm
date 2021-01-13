@@ -100,3 +100,62 @@ class Solution:
         if carry:
             cur.next = ListNode(carry)
         return head
+
+
+# This solution works!
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+# l1 = [2,4,3]
+# l2 = [5,6,4]
+#       7 0 8 
+#           1
+# Output: [7,0,8]
+    
+# Input: l1 = [0], 
+#         l2 = [0]
+# Output: [0]
+    
+# Input: l1 = [9,9,9,9,9,9,9]
+#        l2 = [9,9,9,9]
+#              8 9 9 9 0 0 0 1
+#                1 1 1 1 1 1 1
+# #             dont forget to add the remaining carry over at the end
+# Output: [8,9,9,9,0,0,0,1]  
+    
+# 1 while l1 and l2 are not none
+# 2 while l1 is not none
+# 3 while l2 is not none
+# 4 create nodes while keeping track of the value using variable carry and divmod
+        if not l1:
+            return l2
+        if not l2:
+            return l1
+        cur1 = l1
+        cur2 = l2
+        carry = 0
+        carry, value = divmod((cur1.val+cur2.val+carry), 10)
+        head = cur = ListNode(value)
+        cur1 = cur1.next
+        cur2 = cur2.next
+        
+        while cur1 and cur2:
+            carry, value = divmod((cur1.val+cur2.val+carry), 10)
+            cur.next = cur = ListNode(value)
+            cur1 = cur1.next
+            cur2 = cur2.next
+        
+        cur3 = cur1 or cur2
+        while cur3:
+            carry, value = divmod((cur3.val+carry), 10)
+            cur.next = cur = ListNode(value)
+            cur3 = cur3.next
+        
+        if carry:
+            cur.next = ListNode(carry)
+        return head
