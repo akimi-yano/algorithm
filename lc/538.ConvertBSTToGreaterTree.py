@@ -70,3 +70,25 @@ class Solution:
         
         helper(root, 0)
         return root
+
+
+# This solution works - optimization:
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def convertBST(self, root: TreeNode) -> TreeNode:
+        
+        def helper(cur, right_total):
+            if not cur:
+                return right_total
+            right = helper(cur.right, right_total)
+            cur.val += right
+            return helper(cur.left, cur.val)
+        
+        helper(root, 0)
+        return root
