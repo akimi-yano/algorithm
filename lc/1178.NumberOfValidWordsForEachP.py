@@ -116,4 +116,13 @@ class Solution:
         
         
         
-        
+
+# This solution works -  optimization:
+'''
+we don't need foundfirst because it is going to find first as we check every character in alphabet
+
+but the following part is important:
+
+if char != firstchar:
+                    total += helper(cur.right, firstchar, puzzleset)
+'''

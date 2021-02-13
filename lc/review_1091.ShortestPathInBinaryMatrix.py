@@ -66,3 +66,27 @@ class Solution:
                 if (0 <= newrow < ROW) and (0 <= newcol < COL) and (grid[newrow][newcol] == 0):
                     queue.append((newrow, newcol, step+1))
         return -1
+
+
+# This solution works - optimization:
+
+from collections import deque
+class Solution:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        if not grid or not grid[0] or grid[0][0] == 1:
+            return -1
+        N = len(grid)
+        queue = deque([(0,0,1)])
+        while queue:
+            row, col, step = queue.popleft()
+            if row == N-1 and col == N-1:
+                return step
+            if grid[row][col] == 1:
+                continue
+            grid[row][col] = 1
+            for rd, cd in ((1,0),(0,1),(1,1),(-1,0),(0,-1),(-1,-1),(-1,1),(1,-1)):
+                newrow = row+rd
+                newcol = col+cd
+                if (0 <= newrow < N) and (0 <= newcol < N) and (grid[newrow][newcol] == 0):
+                    queue.append((newrow, newcol, step+1))
+        return -1
