@@ -46,8 +46,27 @@
 # 1 <= Y <= 10^9
 
 
-# This solution works:
+# This approach does not work:
+# import heapq
+# class Solution:
+#     def brokenCalc(self, X: int, Y: int) -> int:
+#         minheap = []
+#         heapq.heappush(minheap,(0, X))
+#         seen = set([])
+#         while minheap:
+#             step, val = heapq.heappop(minheap)
+#             if val == Y:
+#                 return step
+#             if val in seen:
+#                 continue
+#             seen.add(val)
+#             if val < Y:
+#                 heapq.heappush(minheap,(step+1, val*2))
+#             heapq.heappush(minheap,(step+abs(Y-val), Y))
+                
 
+
+# This solution works:
 
 class Solution:
     def brokenCalc(self, X: int, Y: int) -> int:
