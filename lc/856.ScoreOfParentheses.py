@@ -58,3 +58,22 @@ class Solution:
                     else:
                         stack.append(1)
         return sum(stack)
+
+
+
+# This solution works:
+
+class Solution:
+    def scoreOfParentheses(self, S: str) -> int:
+        ans = 0
+        multiplier = 1
+        prev = ''
+        for elem in S:
+            if elem == "(":
+                multiplier *= 2
+            else:
+                multiplier //= 2
+                if prev == "(":
+                    ans += multiplier
+            prev = elem
+        return ans
