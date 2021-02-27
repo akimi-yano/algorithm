@@ -46,7 +46,11 @@
 
 
 # This solution  works:
-
+'''
+use stack
+add twice to make it 2's multiple
+if its  2'smultiple, the state is either use it or not use it - which is easier
+'''
 
 class Solution:
     def divide(self, dividend: int, divisor: int) -> int:
@@ -60,15 +64,17 @@ class Solution:
         dividend = abs(dividend)
         divisor = abs(divisor)
         
+        # keep checking and making possible options until the number is larger than the dividend
         stack = [(divisor, 1)]
         while stack[-1][0] + stack[-1][0] <= dividend:
             old_val,  old_add = stack[-1]
             stack.append((old_val+old_val,old_add+old_add))
 
+        # for each option, keep checking if we should use it or not use it
         count = 0
         while stack:
             val, add = stack.pop()
             if dividend >= val:
-                dividend-= val
+                dividend -= val
                 count += add
         return count if pos else -count
