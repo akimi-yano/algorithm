@@ -31,6 +31,7 @@
 # 2 <= nums.length <= 104
 # 1 <= nums[i] <= 104
 
+
 # This solution works:
 
 from collections import Counter
@@ -61,3 +62,38 @@ class Solution:
             elif counts[num] > 1:
                 dup = num
         return [dup, missing]
+    
+    
+# This solution works:
+'''
+choose 1 number by doing xor with nums array and range(1,n+1)
+from digit = 1, bit shift <<= 1 to find a bit that is 1
+newxor = 0 and iterate through nums array and range(1,n+1) if the number & digit: then xor with new xor
+at this point we dont know which one is missing or dup, so we check in the nums array and if its there then that is the dup, the other is missing
+'''
+class Solution:
+    def findErrorNums(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        xor = 0
+        
+        for num in nums:
+            xor ^= num
+        for i in range(1, n+1):
+            xor ^= i
+            
+        digit = 1
+        while not xor & digit:
+            digit <<= 1
+        
+        newxor = 0
+        for num in nums:
+            if num & digit:
+                newxor ^= num
+        for i in range(1, n+1):
+            if i & digit:
+                newxor ^= i
+        
+        if newxor in nums:
+            return [newxor, xor ^ newxor]
+
+        return [xor ^ newxor, newxor]
