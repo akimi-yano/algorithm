@@ -56,3 +56,25 @@ class Solution:
                     best = max(best, count)
         return best
     
+    
+# This solution works:
+
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        def helper(row, col):
+            nonlocal ROW, COL
+            if not (0<=row<ROW) or not (0<=col<COL) or grid[row][col] == 0:
+                return 0
+        
+            grid[row][col] = 0
+            return 1 + helper(row+1, col) + helper(row-1, col) + helper(row, col+1) + helper(row, col-1)
+        
+        ROW = len(grid)
+        COL = len(grid[0])
+        
+        best = 0
+        for row in range(ROW):
+            for col in range(COL):
+                best = max(best, helper(row, col))
+            
+        return best
