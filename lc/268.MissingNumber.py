@@ -45,8 +45,6 @@
 
 
 # This solution works:
-
-
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
         N = len(nums)
@@ -57,3 +55,7 @@ class Solution:
             cur += num
         return goal - cur
             
+# This solution works:           
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        return sum(range(len(nums)+1)) - sum(nums)
