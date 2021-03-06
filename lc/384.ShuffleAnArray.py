@@ -73,3 +73,38 @@ class Solution:
 # obj = Solution(nums)
 # param_1 = obj.reset()
 # param_2 = obj.shuffle()
+
+
+# This solution works:
+
+from itertools import permutations
+import random
+class Solution:
+
+    def __init__(self, nums: List[int]):
+        self.original = nums
+
+    def reset(self) -> List[int]:
+        """
+        Resets the array to its original configuration and return it.
+        """
+        return self.original
+
+    def shuffle(self) -> List[int]:
+        """
+        Returns a random shuffling of the array.
+        """
+        ans = list(self.original)
+        start = 0
+        N = len(ans)
+        while start < N - 1:
+            idx = random.randint(start, N - 1)
+            ans[start], ans[idx] = ans[idx], ans[start]
+            start += 1
+        return ans
+
+
+# Your Solution object will be instantiated and called as such:
+# obj = Solution(nums)
+# param_1 = obj.reset()
+# param_2 = obj.shuffle()
