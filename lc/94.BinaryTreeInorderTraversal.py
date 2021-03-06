@@ -1,14 +1,14 @@
-# 145. Binary Tree Postorder Traversal
+# 94. Binary Tree Inorder Traversal
 # Medium
 
-# 2416
+# 4353
 
-# 112
+# 192
 
 # Add to List
 
 # Share
-# Given the root of a binary tree, return the postorder traversal of its nodes' values.
+# Given the root of a binary tree, return the inorder traversal of its nodes' values.
 
  
 
@@ -16,7 +16,7 @@
 
 
 # Input: root = [1,null,2,3]
-# Output: [3,2,1]
+# Output: [1,3,2]
 # Example 2:
 
 # Input: root = []
@@ -34,12 +34,12 @@
 
 
 # Input: root = [1,null,2]
-# Output: [2,1]
+# Output: [1,2]
  
 
 # Constraints:
 
-# The number of the nodes in the tree is in the range [0, 100].
+# The number of nodes in the tree is in the range [0, 100].
 # -100 <= Node.val <= 100
  
 
@@ -56,20 +56,20 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def postorderTraversal(self, root: TreeNode) -> List[int]:
+    def inorderTraversal(self, root: TreeNode) -> List[int]:
+        
         def helper(cur):
             if not cur:
                 return
             nonlocal arr
             helper(cur.left)
-            helper(cur.right)
             arr.append(cur.val)
+            helper(cur.right)
         
         arr = []
         helper(root)
         return arr
-
-
+    
     
 # This solution works - iterative:
 
@@ -80,7 +80,8 @@ class Solution:
 #         self.left = left
 #         self.right = right
 class Solution:
-    def postorderTraversal(self, root: TreeNode) -> List[int]:
+    def inorderTraversal(self, root: TreeNode) -> List[int]:
+        
         stack = [(root, False)]
         ans = []
         while stack:
@@ -88,11 +89,9 @@ class Solution:
             if not node:
                 continue
             if not traversed:
-                stack.append((node, True))
                 stack.append((node.right, False))
+                stack.append((node, True))
                 stack.append((node.left, False))
             else:
                 ans.append(node.val)
         return ans
-    
-    
