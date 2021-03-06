@@ -66,3 +66,37 @@ class Solution:
             node.right = arr[i+1] if i+1 < len(arr) else None
             node.left = None
         return root
+    
+    
+# This solution works - constant space:
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def flatten(self, root: TreeNode) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        cur = root
+        while cur:
+            if cur.right:
+                if cur.left is None:
+                    cur = cur.right
+                    continue
+
+                left_rightmost = cur.left
+                while left_rightmost.right is not None:
+                    left_rightmost = left_rightmost.right
+                left_rightmost.right = cur.right
+                cur.right = cur.left
+                cur.left = None
+                cur = cur.right
+            else:
+                cur.right = cur.left
+                cur.left = None
+                cur = cur.right
+        return root
