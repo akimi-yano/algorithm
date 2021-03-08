@@ -63,39 +63,3 @@ class Solution:
                 
                 
                 
-# This solution works - optimization:
-
-
-class Solution:
-    def checkInclusion(self, s1: str, s2: str) -> bool:
-        counter = {}
-        for c in s1:
-            if c not in counter:
-                counter[c] = 0
-            counter[c] += 1
-        for c in s2[:len(s1)]:
-            if c not in counter:
-                counter[c] = 0
-            counter[c] -= 1
-            if not counter[c]:
-                del counter[c]
-        if not counter:
-            return True
-
-        for nxt in range(len(s1), len(s2)):
-            add_c = s2[nxt]
-            del_c = s2[nxt-len(s1)]
-            if add_c not in counter:
-                counter[add_c] = 0
-            if del_c not in counter:
-                counter[del_c] = 0
-            counter[add_c] -= 1
-            counter[del_c] += 1
-            if not counter[add_c]:
-                del counter[add_c]
-            if del_c in counter and not counter[del_c]:
-                del counter[del_c]
-            if not counter:
-                return True
-        return False
-        
