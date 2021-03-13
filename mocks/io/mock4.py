@@ -1,125 +1,104 @@
-'''
+"""
 
-Given an array nums of size n, return the majority element.
+For this question, please refer to this image of a dart board:
+https://upload.wikimedia.org/wikipedia/commons/5/57/Dartboard_diagram.svg
 
-The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+Although, for the purpose of this question, we will ignore the "inner bullseye" and
+"outer bullseye." What remains are 20 segments, numbered from 1 to 20 (shuffled, but all
+present) and two rings: outer and inner.
 
+If a dart lands in the section of a segment that does not intersect a ring, it scores points
+equal to that segment's number. If it lands in the outer ring, it scores double the segment's value,
+and if in the inner ring, triple the value. Thus, there are 60 different ways to score (although some
+of them share a value).
 
-Example 1:
-Input: nums = [3,2,3]
-Output: 3
+One way to play darts is to be given some target number and to try and score exactly that many points
+with up to three darts. Some targets are impossible to reach, such as any number greater than 180 (since
+the maximum score per-dart is 60), but also some smaller numbers, such as 179 and 157. All other
+targets have at least one solution, and most have many solutions.
 
+For example, the target 1 has just one solution:
 
-Example 2:
-Input: nums = [2,2,1,1,1,2,2]
-Output: 2
+[(1x1)]
 
-'''
-'''
-input array of nums
-output val
+As does 180:
 
+[(20x3, 20x3, 20x3)]
 
-invalid [1,1,1,2,2,2]
+The target 3 has 5 solutions:
 
-1 iterate
+[(1x1, 1x1, 1x1), (1x2, 1x1), (2x1, 1x1), (1x3), (3x1)]
 
+10 has 54 solutions, 20 has 212 solutions, and 54 has the most with 619 solutions.
 
- [3,3,2]
-     cur
-val = None-> 3
-count = 0 -> 1 -> 2 ->1
+I'd like you to write a function that takes a target number as input, and returns a list of all one-,
+two-, or three-dart solutions for that target.
 
-[2,2,1,1,1,2,2]
-             c
-val = 2
-count= 1 -> 2 -> 1 -> 0 -> 1 -> 0 -> 1
-'''
-
-
+"""
 
 
 '''
-Majority: ⌊n / 3⌋
+input: integer 
+output: [(1x1)]
+x3 = triple 
+invalid -> [] empty
 
 
-Example 1:
-Input: nums = [3,2,3]
-Output: [3]
+triple x3
+double x2
+other x1
 
-3/3 = 1 -> more than 1 time
+1-20
+3 shots 
 
-Example 2:
-Input: nums = [1]
-Output: [1]
+60 different ways
+more than 180 is impossible
+maximum score per-dart is 60 ( 20 x3)
 
-1/3 = 1 -> 1 time
-
-Example 3:
-Input: nums = [1,2]
-Output: [1,2]
-
-2/3 = 1 -> 1 time
-
-[O,O,O]
- _ _ _
-n/3
+target 180
+1x1=1
+179 180
+[["1x1", 1]]
 
 steps:
-
-[3,3,3,2,2,4,1] -> 3
-            cur
-
-1) threshold = n//3 = 7//3 = 2
-
-
-2) {3:1} -> candidate is 3
-
-
-3) reset the count and traverse again 
-is more than threshold? check by traversing the dictionary's value
-
-return [3]
+1 prepopulate all options []
+2 recusively explore each option - index, remaining, arr
+3 basecase1: remaining == 0 return sequence -> arr 
+4 basecase2: remaining < 0: return []
+5 2 options: use or not use
+6 make sure 3 shots 
 
 
 '''
 
-# This solution works - optimization:
-class Solution:
-    def majorityElement(self, nums):
-        val = None
-        count = 0
-        for num in nums:
-            if count == 0: # initial cond
-                val = num
-                count = 1
-            elif val == num: # same value +1
-                count +=1
-            else: # different value -1
-                count-=1
-        return val
+def get_options(target):
+    options = []
 
-# This solution works:
-class Solution:
-    def majorityElement(self, nums):
-        val = None
-        count = 0
-        for num in nums:
-            if val is None or val == num:
-                val = num
-                count +=1
-            else:
-                if count > 0:
-                    count-=1
-                else:
-                    val = num
-                    count += 1
-        return val
-s = Solution()
-print(s.majorityElement([3,2,3])) #3
-print(s.majorityElement([2,2,1,1,1,2,2])) #2
-print(s.majorityElement([3,3,2])) # 3
-print(s.majorityElement([-1,-1,2,3,0,-1,-1])) #-1
+    for num in range(1, 21):
+        for mult in range(1, 4):
+            options.append((num*mult, str(num)+"x"+str(mult)))
+    
+    def helper(i, remaining, arr, shots):
+        if remaining == 0:
+            return [arr]
+        if i > len(options)-1 or remaining < 0 or shots <=0:
+            return []
         
+        ans =[]
+        # use
+        ans.extend(temp for temp in helper(i, remaining - options[i][0], arr + [options[i][1]], shots-1))
+        # not use
+        ans.extend(temp for temp in helper(i+1, remaining, arr, shots))
+        return ans
         
-        
+    return helper (0, target, [], 3)
+    
+                           
+print(get_options(3))
+print(get_options(180))
+answer = get_options(20) 
+print(answer, len(answer))
+answer = get_options(10) 
+print(answer, len(answer))
+answer = get_options(54) 
+print(len(answer))
