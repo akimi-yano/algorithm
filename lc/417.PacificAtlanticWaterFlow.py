@@ -100,4 +100,43 @@ class Solution:
 
         return ans
         
+# This solution works - optimization:
+
+class Solution:
+    def pacificAtlantic(self, matrix: List[List[int]]) -> List[List[int]]:
+        if len(matrix) < 1 or len(matrix[0]) < 1:
+            return []
+
+        R = len(matrix)
+        C = len(matrix[0])
+
+        reached_pacific = set([])
+        reached_atlantic = set([])
         
+        queue = deque([(0, c, float('-inf')) for c in range(C)] + [(r, 0, float('-inf')) for r in range(1, R)])
+        while queue:
+            r, c, prev = queue.popleft()
+            # if r, c is invalid, or matrix[r][c] is smaller than the previous value
+            if not 0 <= r < R or not 0 <= c < C or matrix[r][c] < prev:
+                continue
+            if (r, c) in reached_pacific:
+                continue
+            reached_pacific.add((r, c))
+            for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                queue.append((r+dr, c+dc, matrix[r][c]))
+        
+        queue = deque([(R-1, c, float('-inf')) for c in range(C)] + [(r, C-1, float('-inf')) for r in range(R-1)])
+        while queue:
+            r, c, prev = queue.popleft()
+            # if r, c is invalid, or matrix[r][c] is smaller than the previous value
+            if not 0 <= r < R or not 0 <= c < C or matrix[r][c] < prev:
+                continue
+            if (r, c) in reached_atlantic:
+                continue
+            reached_atlantic.add((r, c))
+            for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                queue.append((r+dr, c+dc, matrix[r][c]))
+        
+        # print(reached_pacific)
+        
+        return reached_pacific.intersection(reached_atlantic)
