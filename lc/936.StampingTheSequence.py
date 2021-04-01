@@ -124,3 +124,54 @@ class Solution:
             return []
         ans.pop()
         return ans
+    
+# This solution works - slight optimization:
+
+class Solution:
+    '''
+    stamp = "abc"
+    target = "abcbc"
+    
+    "?????"
+    
+    "??abc"
+       ---
+
+    "abcbc"
+     ---
+    '''
+    def movesToStamp(self, stamp: str, target: str) -> List[int]:
+        @lru_cache(None)
+        def helper(i, prev_start):
+            nonlocal stamp, target
+            if i >= len(target):
+                if prev_start != len(target) - len(stamp):
+                    return []
+                return [prev_start]
+            
+            # if we finished processing the stamp that started from prev_start
+            if i >= prev_start + len(stamp):
+                for offset in range(len(stamp)):
+                    if i - offset >= 0 and stamp[offset] == target[i]:
+                        subans = helper(i+1, i-offset)
+                        if subans:
+                            return subans + [prev_start]
+                return []
+            # else, we are still in the middle of processing the stamp
+            else:
+                if stamp[i-prev_start] == target[i]:
+                    subans = helper(i+1, prev_start)
+                    if subans:
+                        return subans
+                if stamp[0] == target[i]:
+                    subans = helper(i+1, i)
+                    if subans:
+                        return [prev_start] + subans
+                return []
+        
+        if stamp[0] != target[0]:
+            return []
+        ans = helper(1, 0)
+        if not ans:
+            return []
+        return ans
