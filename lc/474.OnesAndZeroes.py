@@ -103,3 +103,32 @@ class Solution:
             return max_length
             
         return helper(0, 0, 0)    
+    
+    
+# This solution works - optimization:
+
+from collections import Counter
+class Solution:
+    def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
+        arr = []
+        for elem in strs:
+            counts = Counter(elem)
+            arr.append((counts['1'], counts['0']))
+            
+        @lru_cache(None)   
+        def helper(i, total_zero, total_one):
+            nonlocal arr, m, n
+            if i > len(arr)-1:
+                if total_zero <= m and total_one <= n:
+                    return 0
+                else:
+                    return float('-inf')
+            one, zero = arr[i]
+            max_length = 0
+            if total_zero+zero <= m and total_one+one <= n:
+                max_length = max(max_length, 1+ helper(i+1, total_zero+zero, total_one+one))
+            max_length = max(max_length, helper(i+1, total_zero, total_one))
+            return max_length
+            
+        return helper(0, 0, 0)      
+    
