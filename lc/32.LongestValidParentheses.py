@@ -52,3 +52,24 @@ class Solution:
                     continue
                 best = max(best, i - arr[-1])
         return best
+    
+# This approach does not work - just keeping track of the counts with variables wont work as you lose track
+# of the index - we need stack at least:
+
+# class Solution:
+#     def longestValidParentheses(self, s: str) -> int:
+#         total = 0
+#         opens = 0
+#         best = 0
+#         for elem in s:
+#             if elem == "(":
+#                 opens += 1
+#             else:
+#                 if opens:
+#                     total += 2
+#                     opens -= 1
+#                 else:
+#                     total = 0
+#                 best = max(best, total)
+#         return best
+                
