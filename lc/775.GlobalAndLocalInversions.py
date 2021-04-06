@@ -77,9 +77,15 @@ class Solution:
     
 # This solution works - optimization:
 
-from sortedcontainers import SortedList
+
 class Solution:
     def isIdealPermutation(self, A: List[int]) -> bool:
+        '''
+        for prevmax keep track of the max of the prevprev value
+        as the rule is that the prev prev value cannot be larger than current num
+        everything before previous one has to be smaller than or equal to
+        if there is single one that is not following the rule, then return False
+        '''
         prevmax = prev = float('-inf')
         for num in A:
             if prevmax > num:
@@ -87,8 +93,3 @@ class Solution:
             prevmax = max(prevmax, prev)
             prev = num
         return True
-    
-'''
-for prevmax keep track of the max of the prevprev value
-as the rule is that the prev prev value cannot be larger than current num
-'''
