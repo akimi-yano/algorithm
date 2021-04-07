@@ -61,3 +61,50 @@ class Solution:
         for num in arr:
             ans += abs(n-num)
         return ans//2
+
+
+# This solution works - 1 liner:
+
+class Solution:
+    def minOperations(self, n: int) -> int:
+        return sum([abs(n-((2*i)+1)) for i in range(n)])//2
+
+
+
+
+# This solution works ! optimization with math formula of constant time complexity:
+
+class Solution:
+    def minOperations(self, n: int) -> int:
+        if n % 2 == 0:
+            return (n//2)**2
+        else:
+            return (n//2)*((n//2)+1)
+
+        '''
+        n = 4
+        1  3  5  7
+        
+        -3 -1 +1 +3
+        
+        1+3+5+ ... = ans
+        (2-1)+(4-1)+(6-1)
+        =(2+4+6...+n) - (1+1+1...) 
+        =(n)(n+1) - n
+        =1+2+...+n=(n)(n+1) // 2
+        = n**2
+        
+        ______________________________
+        n = 5
+        1  3  5  7  9
+        
+        4  2  0 -2 -4
+        
+        (1+1)+(2+2)+(3+3)+(n+n)
+        =2(1)+2(2)+2(3)+...2(n)
+        =2*(1+2+3+4+...+n)
+        =2*((n*(n+1))//2)
+        =n*(n+1)
+        
+        
+        '''
