@@ -58,3 +58,11 @@ class Solution:
                     return False
         return True
                 
+
+# This solution works - 3 liners but worse in performance:
+
+class Solution:
+    def isAlienSorted(self, words: List[str], order: str) -> bool:
+        memo = {c: i for i, c in enumerate(order)}
+        idxs = [[memo[c] for c in word] for word in words]
+        return all(idxs[i] == idx for i, idx in enumerate(sorted(idxs)))
