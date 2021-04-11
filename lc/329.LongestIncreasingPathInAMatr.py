@@ -62,3 +62,27 @@ class Solution:
                 seen = set([])
                 longest = max(longest, helper(row, col,float ('-inf')))    
         return longest
+    
+# This solution works ! - optimization:
+
+class Solution:
+    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        ROW = len(matrix)
+        COL = len(matrix [0])
+        
+        @lru_cache(None)
+        def helper(row, col):
+            nonlocal matrix
+            best = 1
+            for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                row2, col2 = row + dr, col + dc
+                if 0<=row2<ROW and 0<=col2<COL and matrix[row][col] < matrix[row2][col2]:
+                    best = max(best, 1 + helper(row2, col2))
+            return best
+                        
+        longest = 0
+        for row in range(ROW):
+            for col in range(COL):
+                longest = max(longest, helper(row, col))
+        helper.cache_clear()
+        return longest
