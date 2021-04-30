@@ -72,6 +72,22 @@ class Solution:
         if ans[0] > len(nums)-1 or ans[0] < 0 or nums[ans[0]] != target:
             return [-1,-1]
         return ans
+
+    # This solutioin works - shorter ver:
+    '''
+    if we cannot find it, we know it if it is left == right
+    left is inclusive; right is exclusive
+    '''
+    class Solution:
+        def searchRange(self, nums: List[int], target: int) -> List[int]:
+            left = bisect_left(nums, target)
+            right = bisect_right(nums, target)
+            
+            if left == right:
+                return [-1, -1]
+            return [left, right-1]
+        
+        
         
         
         
