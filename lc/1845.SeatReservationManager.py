@@ -51,30 +51,18 @@ from sortedcontainers import SortedList
 class SeatManager:
 
     def __init__(self, n: int):
-        # self.arr = [0 for _ in range(n)]
-        # self.idxs = [num for num in range(n-1, -1, -1)]
         self.sorted_list = SortedList()
         for num in range(n, 0, -1):
             self.sorted_list.add(num)
         
     def reserve(self) -> int:
-        # popped = self.idxs.pop() 
-        # to_return = popped + 1
-        # # if not self.idxs or self.idxs[-1] > popped:
-        #     self.idxs.append(seatNumber-1)
-        # self.arr[self.idx] = 1
-        # while self.idx < len(self.arr) and self.arr[self.idx] == 1:
-        #     self.idx += 1
         to_pop = self.sorted_list[0]
         self.sorted_list.remove(to_pop)
         return to_pop
      
-
     def unreserve(self, seatNumber: int) -> None:
-        # self.arr[seatNumber-1] = 0
-        # if not self.idxs or self.idxs[-1] > seatNumber-1:
-        #     self.idxs.append(seatNumber-1)
         self.sorted_list.add(seatNumber)
+        
 # Your SeatManager object will be instantiated and called as such:
 # obj = SeatManager(n)
 # param_1 = obj.reserve()
