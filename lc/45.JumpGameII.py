@@ -51,3 +51,21 @@ class Solution:
                     minops = min(minops, 1 + helper(i+jump))
             return minops
         return helper(0)
+
+
+# This solution works - optimization:
+
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        @lru_cache(None)
+        def helper(i):
+            if i == len(nums)-1:
+                return 0
+            minops = float('inf')
+            for next_i in range(i+1, i+nums[i]+1):
+                if next_i <= len(nums)-1:
+                    minops = min(minops, 1 + helper(next_i))
+                else:
+                    break
+            return minops
+        return helper(0)
