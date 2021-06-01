@@ -64,3 +64,32 @@ class Solution:
             
         cands = [[min(B[i]), max(B[i])] for i in range(n-1) if B[i]]
         return max(y[0]-x[1] for x, y in zip(cands, cands[1:]))
+
+# This solution works:
+
+class Solution:
+    def maximumGap(self, nums: List[int]) -> int:
+        if len(nums) < 2:
+            return 0
+
+        mx, mn = max(nums), min(nums)
+        size = max(1, (mx-mn) // (len(nums) - 1))
+        
+        buckets = defaultdict(list)
+        
+        for num in nums:
+            key = (num - mn) // size
+            # value is [max, min]
+            if not buckets[key]:
+                buckets[key] = [num, num]
+            else:
+                buckets[key][0] = max(buckets[key][0], num)
+                buckets[key][1] = min(buckets[key][1], num)
+        
+        arr = list(buckets.items())
+        arr.sort(key = lambda x: x[0])
+        ans = 0
+        # compare the cur_min -  prev_max 
+        for i in range(1, len(arr)):
+            ans = max(ans, arr[i][1][1] - arr[i-1][1][0] )
+        return ans
