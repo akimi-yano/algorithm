@@ -61,3 +61,32 @@ class Solution:
                 if len(maxheap) > k:
                     heapq.heappop(maxheap)
         return -heapq.heappop(maxheap)
+
+# This solution works - binary search:
+
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        n, left, right = len(matrix), matrix[0][0], matrix[-1][-1]
+        
+        def check(m):
+            i, j, cnt = 0, n-1, 0
+            for i in range(n):
+                while j >= 0 and matrix[i][j] > m: j -= 1
+                cnt += (j + 1)
+            return cnt
+         
+        while left < right:
+            mid = (left + right)//2
+            if check(mid) < k:
+                left = mid + 1
+            else:
+                right = mid
+                
+        return left
+
+'''
+The idea is for number X find number of elements which are less or equal than X, which can be done in O(n), idea is similar to problem 240: Search a 2D Matrix II: we can start with the top right element and move only down and to the left, counting number of elements <X in each row. We start with the smallest and the biggest elements in our table and do binary search, each time asking question: is number of elements < X is more than k? We do binary search and stop when end become equal to beg.
+
+Complexity
+Time complexity is O(n * log(A)), where A is difference between maximum and minimum values in our matrix.
+'''
