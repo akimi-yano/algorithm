@@ -34,7 +34,7 @@
 # All the rows and columns of matrix are guaranteed to be sorted in non-decreasing order.
 # 1 <= k <= n2
 
-# This solution works:
+# This solution works - push all the elements into a new array and sort:
 
 class Solution:
     def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
@@ -46,3 +46,18 @@ class Solution:
                 ans.append(matrix[row][col])
         ans.sort()
         return ans[k-1]
+
+# This solution works - maxheap of size k:
+
+import heapq
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        maxheap = []
+        R = len(matrix)
+        C = len(matrix[0])
+        for row in range(R):
+            for col in range(C):
+                heapq.heappush(maxheap, -matrix[row][col])
+                if len(maxheap) > k:
+                    heapq.heappop(maxheap)
+        return -heapq.heappop(maxheap)
