@@ -65,3 +65,27 @@ class Solution:
             return min_op
                 
         return helper(0, None)
+
+
+# This solution works: - optimization:
+
+class Solution:
+    def minFlipsMonoIncr(self, s: str) -> int:
+        @lru_cache(None)
+        def helper(i, prev):
+            if i > len(s)-1:
+                return 0
+            min_op = len(s)
+            if prev == '0':
+                if s[i] == '0':
+                    min_op = helper(i+1, '0')
+                else:
+                    min_op = min(min_op, helper(i+1, '1'), 1+helper(i+1, '0'))
+            else:
+                if s[i] == '0':
+                    min_op = 1+helper(i+1, '1')
+                else:
+                    min_op = helper(i+1, '1')
+            return min_op
+                
+        return helper(0, '0')
