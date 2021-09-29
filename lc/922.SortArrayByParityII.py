@@ -55,3 +55,28 @@ class Solution:
             ans.append(evens.pop())
             ans.append(odds.pop())
         return ans
+
+
+# This solution works - optimization:
+
+'''
+O(n) space complexity soluiton is straightforward. It is more interseting to investigate O(1) solution. The idea is to use two pointers approach, where we start with index 0 for even numbers and with index 1 for odd numbers. We traverse our numbers, where we can have the following options:
+
+if nums[i] % 2 == 0, then number is already on place, so we look at the next place for i.
+if nums[j] % 2 == 1, then number is already on place, so we look ate the next place for j.
+In the opposite case we need to sweich elements.
+Complexity
+Time complexity is O(n), space complexity is O(1).
+'''
+
+class Solution:
+    def sortArrayByParityII(self, nums):
+        i, j, n = 0, 1, len(nums)
+        while j < n and i < n:
+            if nums[i] % 2 == 0:
+                i += 2
+            elif nums[j] % 2 == 1:
+                j += 2
+            else:
+                nums[i], nums[j] = nums[j], nums[i]
+        return nums
