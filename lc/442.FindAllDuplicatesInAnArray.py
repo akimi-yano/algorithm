@@ -48,3 +48,25 @@ class Solution:
             if counts[num] == 2:
                 ans.append(num)
         return ans
+
+
+# This solution works - optimization:
+
+
+class Solution:
+    def findDuplicates(self, nums: List[int]) -> List[int]:
+        ans = []
+        for idx in nums:
+        
+            if nums[abs(idx)-1]>0:
+                nums[abs(idx)-1]*=(-1)
+            else:
+                ans.append(abs(idx))
+
+        return ans
+    
+    # 1<=elem<=n 
+    # [4,3,2,7,8,2,3,1]
+    #  0 1 2 3 4 5 6 7
+      # -3-2-7-8ad-3-1
+    
