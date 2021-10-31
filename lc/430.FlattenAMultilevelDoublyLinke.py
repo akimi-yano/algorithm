@@ -130,3 +130,46 @@ Solution without extra array: the same idea, where we reconnect our nodes direct
 #         res = dummy.next
 #         res.prev = None
 #         return res
+
+
+# This solution works - recusion solution:
+
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val, prev, next, child):
+        self.val = val
+        self.prev = prev
+        self.next = next
+        self.child = child
+"""
+
+class Solution:
+    def flatten(self, head: 'Node') -> 'Node':
+        def helper(node):
+            start = cur = node
+            prev = None
+            while cur:
+                nxt = cur.next
+                if cur.child:
+                    child_first, child_last = helper(cur.child)
+                    cur.child = None
+                    
+                    cur.next = child_first
+                    child_first.prev = cur
+                    if nxt:
+                        nxt.prev = child_last
+                    child_last.next = nxt
+                    # tricky part
+                    prev = child_last
+                else:
+                    prev = cur
+                cur = nxt
+            return start, prev
+                
+        
+        first, last = helper(head)
+        return first
+    
+    
