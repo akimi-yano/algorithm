@@ -68,3 +68,42 @@ class Solution:
         
         for i,j in product(range(self.M), range(self.N)):
             board[i][j] = "X" if board[i][j] != "T" else "O"
+
+
+# This solution works:
+
+
+class Solution:   
+    def solve(self, board):
+        def helper(row, col, look, symbol):
+            if not(0<=row<ROW) or not(0<=col<COL) or board[row][col]!=look:
+                return
+            board[row][col] = symbol
+            helper(row, col+1, look, symbol)
+            helper(row, col-1, look, symbol)
+            helper(row+1, col, look, symbol)
+            helper(row-1, col, look, symbol)
+        
+        ROW = len(board)
+        COL = len(board[0])
+        for row in range(ROW):
+            if board[row][0] == 'O':
+                helper(row, 0, 'O', 'F')
+            if board[row][COL-1] == 'O':
+                helper(row, COL-1, 'O', 'F')
+        for col in range(COL):
+            if board[0][col] == 'O':
+                helper(0, col, 'O', 'F')
+            if board[ROW-1][col] == 'O':
+                helper(ROW-1, col, 'O', 'F')
+        
+        for row in range(ROW):
+            for col in range(COL):
+                if board[row][col] == 'O':
+                    helper(row, col, 'O', 'X')
+        
+        for row in range(ROW):
+            for col in range(COL):
+                if board[row][col] == 'F':
+                    helper(row, col, 'F', 'O')
+        
