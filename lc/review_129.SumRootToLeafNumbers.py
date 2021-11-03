@@ -76,3 +76,37 @@ class Solution:
         if root.right: root.right.val = 10*root.val + root.right.val
             
         return self.sumNumbers(root.left) + self.sumNumbers(root.right)
+
+
+# This solution works:
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def sumNumbers(self, root):
+        
+        def helper(cur, nums):
+            nonlocal ans
+            if not cur.left and not cur.right:
+                new_nums = list(nums)
+                new_nums.append(cur.val)
+                i = 0
+                total = 0
+                while new_nums:
+                    val = new_nums.pop()
+                    total += val*10**i
+                    i += 1
+                ans += total
+                return
+            if cur.left:
+                helper(cur.left, nums + [cur.val])
+            if cur.right:
+                helper(cur.right, nums + [cur.val])
+        
+        ans = 0
+        helper(root, [])
+        return ans
