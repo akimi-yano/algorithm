@@ -48,5 +48,15 @@
 # This solution works:
 
 
+'''
+Nothing special in this problem: we need to compute all prefix sums and then choose the smallest one. Also we need to deal with the case when all sums are positive: we can not start from negative number or zero.
+
+Complexity
+It is O(n) both for time and space.
+
+'''
+class Solution:
+    def minStartValue(self, nums):
+        return max(1, 1 - min(accumulate(nums)))
 
 
