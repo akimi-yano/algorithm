@@ -61,3 +61,37 @@ class CombinationIterator:
 # obj = CombinationIterator(characters, combinationLength)
 # param_1 = obj.next()
 # param_2 = obj.hasNext()
+
+
+
+# This solution works:
+
+
+from collections import deque
+class CombinationIterator:
+
+    def __init__(self, characters: str, combinationLength: int):
+        # store all the unique options in self.storage   
+        self.queue = deque([]) # ['ab','ac','bc'] # populate the list with combinationLength using recursion
+        self.chars = characters
+        self.comb_len = combinationLength
+        self.helper('', 0)
+        
+    def helper(self, s, start):
+        if len(s) == self.comb_len:
+            self.queue.append(s)
+            return 
+        for i in range(start, len(self.chars)):
+            self.helper(s + self.chars[i], i+1)
+        
+    def next(self) -> str:
+        return self.queue.popleft()
+
+    def hasNext(self) -> bool:
+        return self.queue
+
+
+# Your CombinationIterator object will be instantiated and called as such:
+# obj = CombinationIterator(characters, combinationLength)
+# param_1 = obj.next()
+# param_2 = obj.hasNext()
