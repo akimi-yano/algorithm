@@ -61,3 +61,57 @@ class Solution:
                 if nums[i] % nums[j] == 0 and len(sol[i]) < len(sol[j]) + 1:
                     sol[i] = sol[j] + [nums[i]]
         return max(sol, key=len)
+
+
+
+# This solution works:
+
+
+class Solution:
+    def largestDivisibleSubset(self, nums):
+        '''
+        1 2 3 9
+        
+        [1]
+        [1] <- 2?
+        [1], [1, 2]
+        [1], [1, 2] <- 3?
+        [1], [1, 3], [1, 2]
+        [1], [1, 3], [1, 2] <- 9?
+        [1], [1, 9], [1, 3], [1, 3, 9], [1, 2]
+        
+        
+        [1, 2, 3, 4]
+        dictionary structure:
+        {num: subset}
+        
+        before loop:
+        {}
+
+        loop 1: 1
+        {1: [1]}
+        
+        loop 2: 2
+        pick [1]
+        {1: [1], 2: [1, 2]}
+        
+        loop 3: 3
+        pick [1]
+        {1: [1], 2: [1, 2], 3: [1, 3]}
+        
+        loop 4: 4
+        pick [1, 2]
+        {1: [1], 2: [1, 2], 3: [1, 3], 4: [1, 2, 4]}
+        
+        
+        '''
+        dictionary = {}
+        nums.sort()
+        for num in nums:
+            best_subset = []
+            for other_subset in dictionary.values():
+                if num % other_subset[-1] == 0 and len(other_subset) > len(best_subset):
+                    best_subset = list(other_subset)
+            best_subset.append(num)
+            dictionary[num] = best_subset
+        return max(dictionary.values(), key=lambda v:len(v))
