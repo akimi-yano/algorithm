@@ -43,3 +43,48 @@
 # This solution works:
 
 
+class Solution:
+    def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
+        email_name = {}
+        email_email = {}
+        for account in accounts:
+            name = account[0]
+            emails = account[1:]
+            for email in emails:
+                email_name[email] = name
+                email_email[email] = set()
+            
+        for account in accounts:
+            name = account[0]
+            emails = account[1:]
+            for email1 in emails:
+                for email2 in emails:
+                    if email1!=email2:
+                        email_email[email1].add(email2)
+                        email_email[email2].add(email1)
+        
+        def helper(cur_email):
+            nonlocal temp
+            if cur_email in seen:
+                return
+            temp.append(cur_email)
+            seen.add(cur_email)
+            for next_email in email_email[cur_email]:
+                helper(next_email)
+    
+        ans = []
+        seen = set([])
+        for email in email_email:
+            temp = []
+            helper(email)
+            if temp:
+                name = email_name[temp[0]]
+                temp.sort()
+                ans.append([name]+temp)
+        return ans
+            
+        
+        
+            
+              
+            
