@@ -47,3 +47,34 @@
 # This solution works:
 
 
+class Solution:
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+        
+        ROW = len(matrix)
+        COL = len(matrix[0])
+        
+        widths = []
+        for row in matrix:
+            arr = []
+            count = 0
+            for elem in row:
+                if elem == "1":
+                    count += 1
+                else:
+                    count = 0
+                arr.append(count)
+            widths.append(arr)
+        print(widths)
+        
+        ans = 0
+        for start_row in range(ROW):
+            for col in range(COL):
+                width = float('inf')
+                for end_row in range(start_row, ROW):
+                    width = min(width, widths[end_row][col])
+                    if width == 0:
+                        break
+                    ans = max(ans, (end_row-start_row+1)*width)
+        return ans
