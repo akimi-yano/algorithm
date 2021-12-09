@@ -49,7 +49,6 @@
 class Solution:
     def canReach(self, arr: List[int], start: int) -> bool:
         
-        @lru_cache(None)
         def helper(i):
             seen.add(i)
             if arr[i] == 0:
