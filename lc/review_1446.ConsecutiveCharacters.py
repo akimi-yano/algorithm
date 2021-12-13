@@ -47,3 +47,16 @@
 # This solution works:
 
 
+class Solution:
+    def maxPower(self, s: str) -> int:
+        prev = None
+        count = 0
+        best = 0
+        for elem in s:
+            if elem == prev:
+                count += 1
+            else:
+                prev = elem
+                count = 1
+            best = max(best, count)
+        return best
