@@ -45,3 +45,38 @@
 # This solution works:
 
 
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        all_courses = set([num for num in range(numCourses)])
+        adj = {}
+        reverse_adj = {}
+        for later, first in prerequisites:
+            
+            if first not in adj:
+                adj[first] = set([])
+            adj[first].add(later)
+            
+            if later not in reverse_adj:
+                reverse_adj[later] = set([])
+            reverse_adj[later].add(first)
+        
+        can_take = []
+        for course in all_courses:
+            if course not in reverse_adj:
+                can_take.append(course)
+        path = []
+        while can_take:
+            course = can_take.pop()
+            path.append(course)
+            all_courses.remove(course)
+            if course in adj:
+                for next_course in adj[course]:
+                    reverse_adj[next_course].remove(course)
+                    if len(reverse_adj[next_course]) < 1:
+                        del reverse_adj[next_course]
+                        can_take.append(next_course)
+                        
+        if not all_courses:
+            return path
+        else:
+            return []
