@@ -37,3 +37,28 @@
 
 # This solution works:
 
+
+class Solution:
+    def numPairsDivisibleBy60(self, time: List[int]) -> int:
+        # modding after summing and summing after modding are the same !
+        counts = {}
+        for t in time:
+            modded_num = t%60
+            if modded_num not in counts:
+                counts[modded_num] = 0
+            counts[modded_num] += 1
+        
+        ans = 0
+        # 0 and 30 - use combination
+        for num in range(31):
+            if num in counts:
+                the_other = 60-num
+                if the_other == num:
+                    ans += math.comb(counts[num], 2)
+                elif num == 0:
+                    ans += math.comb(counts[num], 2)
+                else:
+                    if the_other in counts:
+                        ans += counts[the_other] * counts[num]
+        return ans
+                    
