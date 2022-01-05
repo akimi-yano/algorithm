@@ -54,3 +54,34 @@ class Solution:
             left += 1
             right -= 1
         return True
+
+
+# This solution also works:
+
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        def is_palindrome(chars):
+            l = 0
+            r = len(chars)-1
+            while l < r:
+                if chars[l] != chars[r]:
+                    return False
+                l += 1
+                r -= 1
+            return True
+        
+        def helper(letters, arr):
+            nonlocal ans
+            if not letters:
+                ans.append(arr)
+                return
+            
+            for i in range(len(letters)):    
+                if is_palindrome(letters[:i+1]):
+                    helper(letters[i+1:], arr + [letters[:i+1]])
+                    
+        ans = []
+        helper(s, [])
+        return ans
+                    
+        
