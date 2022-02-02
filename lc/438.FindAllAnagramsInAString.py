@@ -39,3 +39,31 @@
 
 # This soluion works:
 
+
+from collections import Counter
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        goal= Counter(p)
+        cur = Counter()
+        ans = []
+        count = 0
+        for i in range(len(s)):
+            cur[s[i]] += 1
+            count += 1
+            if count == len(p):
+                if goal == cur:
+                    ans.append(i+1-count)
+                cur[s[i+1-count]] -= 1
+                count -=1
+        return ans
+        '''
+         
+        s "cbaebabacd"
+        p "abc"
+        
+        goal {a:1, b:1, c:0}
+        cur {c:1, b:1, a:1}
+        ans []
+        count 0 1 2 
+        
+        '''
