@@ -63,3 +63,30 @@ class Solution:
                         queue.append((new_word, step+1))
         return 0
                         
+
+# This solution works: optimization - typical way to optimize for BFS is checking the set right after poping from queue
+# remember - you can be appending things multiple times to a queue but only one time for popping
+
+
+from collections import deque
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        wordSet = set(wordList)
+        if endWord not in wordSet:
+            return 0
+        queue = deque([(beginWord, 1)])
+        seen = set([])
+        while queue:
+            word, step = queue.popleft()
+            if word == endWord:
+                return step
+            if word in seen:
+                continue
+            seen.add(word)
+            for i in range(len(word)):
+                for char in "abcdefghijklmnopqrstuvwxyz":
+                    new_word = word[:i] + char + word[i+1:]
+                    if new_word in wordSet:
+                        queue.append((new_word, step+1))
+        return 0
+                        
