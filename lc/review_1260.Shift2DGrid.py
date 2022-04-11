@@ -48,3 +48,13 @@
 # This solution works:
 
 
+class Solution:
+    def shiftGrid(self, grid: List[List[int]], k: int) -> List[List[int]]:
+        ROW = len(grid)
+        COL = len(grid[0])
+        ans = [[None for _ in range(COL)] for _ in range(ROW)]
+        
+        for row in range(ROW):
+            for col in range(COL):
+                ans[(row+((col+k)//COL))%ROW][(col+k)%COL] = grid[row][col]
+        return ans
