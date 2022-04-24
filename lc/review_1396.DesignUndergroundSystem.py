@@ -83,3 +83,29 @@
 # This solution works:
 
 
+class UndergroundSystem:
+
+    def __init__(self):
+        self.memo = {}
+        self.records = {}
+        
+    def checkIn(self, id: int, stationName: str, t: int) -> None:
+        self.memo[id] = (stationName, t)
+
+    def checkOut(self, id: int, stationName: str, t: int) -> None:
+        startStation, startTime = self.memo[id]
+        endStation, endTime = stationName, t
+        diff = endTime - startTime
+        if (startStation, endStation) not in self.records:
+            self.records[(startStation, endStation)] = []
+        self.records[(startStation, endStation)].append(diff)
+
+    def getAverageTime(self, startStation: str, endStation: str) -> float:
+        return sum(self.records[(startStation, endStation)])/len(self.records[(startStation, endStation)])
+
+
+# Your UndergroundSystem object will be instantiated and called as such:
+# obj = UndergroundSystem()
+# obj.checkIn(id,stationName,t)
+# obj.checkOut(id,stationName,t)
+# param_3 = obj.getAverageTime(startStation,endStation)
