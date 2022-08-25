@@ -37,3 +37,11 @@
 # This solution works:
 
 
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        goals = Counter(ransomNote)
+        options = Counter(magazine)
+        for char, num in goals.items():
+            if char not in options or num > options[char]:
+                return False
+        return True 
