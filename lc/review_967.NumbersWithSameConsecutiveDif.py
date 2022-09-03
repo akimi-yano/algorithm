@@ -36,3 +36,25 @@
 # This solution works:
 
 
+class Solution:
+    def numsSameConsecDiff(self, n: int, k: int) -> List[int]:
+        def helper(remaining, cur):
+            nonlocal ans
+            if remaining == 0:
+                ans.append(cur)
+                return
+            for num in range(10):
+                if n != remaining:
+                    #the diff has to be k and the 0 is ok
+                    prev = cur % 10
+                    if prev + k == num:
+                        helper(remaining-1, cur*10+num)
+                    elif prev - k == num:
+                        helper(remaining-1, cur*10+num)
+                elif num != 0:
+                    #no leading 0
+                    helper(remaining-1, cur+num)
+        
+        ans = []
+        helper(n, 0)
+        return ans
