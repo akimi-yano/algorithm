@@ -77,3 +77,18 @@ class Solution:
                 if look in memo:
                     return [i, memo[look][0]]
         
+'''
+Another approach
+'''
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        memo = {}
+        for i, num in enumerate(nums):
+            if num in memo:
+                return [memo[num], i]
+            look = target-num
+            memo[look] = i
+            
+            
+        

@@ -59,3 +59,23 @@ class Solution:
             return memo[n]
         memo = {}
         return helper(n)
+
+'''
+Another approach
+'''
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n == 1:
+            return 1
+        if n == 2:
+            return 2
+        prevprev = 1
+        prev = 2
+        
+        for num in range(3, n+1):
+            total = prev + prevprev
+            prevprev = prev
+            prev = total 
+
+        return total
