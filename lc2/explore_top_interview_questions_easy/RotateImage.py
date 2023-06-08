@@ -67,3 +67,36 @@ class Solution:
         for row in range(ROW):
             for col in range(COL):
                 matrix[row][col] = temp_matrix[row][col]
+
+
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        '''
+        [[1,2,3],
+         [4,5,6],
+         [7,8,9]]
+        
+        then change the row and col
+        
+        [[1,4,7],
+         [2,5,8],
+         [3,6,9]]
+         
+        then swap the cols
+        
+        [[7,4,1],
+         [8,5,2],
+         [9,6,3]]
+        '''
+        ROW = len(matrix)
+        COL = len(matrix[0])
+        for row in range(ROW):
+            for col in range(row, COL):
+                matrix[row][col], matrix[col][row] = matrix[col][row], matrix[row][col]
+        
+        for row in range(ROW):
+            for col in range(COL//2):
+                matrix[row][col], matrix[row][COL-1-col] = matrix[row][COL-1-col], matrix[row][col]
