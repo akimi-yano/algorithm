@@ -63,3 +63,6 @@ class Solution:
                 remainder -= chalk[i]
             else:
                 return i
+
+# Time: O(N)
+# Space: O(1)
