@@ -51,3 +51,25 @@ class Solution:
     
 # Time: O(N*W) where N is length of words * W is length of words[i]
 # Space: O(A) or O(W) A (allowed)is 26 at max and W (words[i]) is 10 at max. Whichever is larger.
+
+# This solution works and its an optimization fofr space complexity:
+
+class Solution:
+    def countConsistentStrings(self, allowed: str, words: List[str]) -> int:
+        goal = 0
+        for char in allowed:
+            goal = (1 << (ord(char) - ord('a'))) | goal
+
+        ans = 0
+        for word in words:
+            for char in word:
+                if not ((1 << (ord(char) - ord('a'))) & goal):
+                    break
+            else:
+                ans += 1
+        return ans
+
+# Time: O(N*W)
+# Space: O(1)
+
+# We could also do like this to check the bit ->:  bit = (allowed_bits >> (ord(char) - ord("a"))) & 1 
