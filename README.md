@@ -1,5 +1,3 @@
-# algorithm-practice
+# algorithm
 
-programming competitions
-daily challenge
-books
+This is a repo for algorithm.
