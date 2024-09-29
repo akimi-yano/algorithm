@@ -43,3 +43,121 @@ key consists of lowercase English letters.
 It is guaranteed that for each call to dec, key is existing in the data structure.
 At most 5 * 104 calls will be made to inc, dec, getMaxKey, and getMinKey.
 '''
+
+class DLLNode:
+    def __init__(self, count):
+        self.count = count
+        self.keys = set([])
+        self.next = None
+        self.prev = None
+
+class AllOne:
+    def __init__(self):
+        self.key_node = {}
+        self.head = DLLNode(-inf)
+        self.tail = DLLNode(inf)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+    
+    def insert_node(self, prev_node, next_node, middle_node):
+        prev_node.next = middle_node
+        next_node.prev = middle_node
+        middle_node.prev = prev_node
+        middle_node.next = next_node
+
+    def delete_node(self, node):
+        node.prev.next, node.next.prev = node.next, node.prev
+
+    def inc(self, key: str) -> None:
+        count = None
+        if key not in self.key_node:
+            cur_node = self.head
+            count = 1
+        else:
+            cur_node = self.key_node[key]
+            count = cur_node.count + 1
+            cur_node.keys.remove(key)
+
+        next_node = None
+        if cur_node.next.count > count:
+            next_node = DLLNode(count)
+            self.insert_node(cur_node, cur_node.next, next_node)
+        else:
+            next_node = cur_node.next
+        next_node.keys.add(key)
+        self.key_node[key] = next_node
+
+        if cur_node is not self.head and len(cur_node.keys) == 0:
+            self.delete_node(cur_node)
+       
+        # self.print_list()
+
+    def dec(self, key: str) -> None:
+        cur_node = self.key_node[key]
+        cur_node.keys.remove(key)
+        count = cur_node.count - 1
+
+        next_node = None
+        if count == 0:
+            pass
+        elif cur_node.prev.count < count:
+            next_node = DLLNode(count)
+            self.insert_node(cur_node.prev, cur_node, next_node)
+        else:
+            next_node = cur_node.prev
+        
+        if next_node is not None:
+            next_node.keys.add(key)
+            self.key_node[key] = next_node
+        else:
+            del self.key_node[key]
+
+        if len(cur_node.keys) == 0:
+            self.delete_node(cur_node)
+
+        # self.print_list()
+            
+    def getMaxKey(self) -> str:
+        if self.tail.prev is self.head:
+            return ""
+        else:
+            temp_node = self.tail.prev.keys.pop()
+            self.tail.prev.keys.add(temp_node)
+            return temp_node
+
+    def getMinKey(self) -> str:
+        if self.head.next is self.tail:
+            return ""
+        else:
+            temp_node = self.head.next.keys.pop()
+            self.head.next.keys.add(temp_node)
+            return temp_node
+            
+    def print_list(self):
+        current = self.head
+        str_list = []
+        while current is not None:  
+            str_list.append(f'[{current.count} {current.keys}]')
+            current = current.next
+        print('->'.join(str_list))
+
+# Your AllOne object will be instantiated and called as such:
+# obj = AllOne()
+# obj.inc(key)
+# obj.dec(key)
+# param_3 = obj.getMaxKey()
+# param_4 = obj.getMinKey()
+
+'''
+{key: Node(count, keys, prev, next)}
+{count:set{(Node(key)}}
+tail
+head
+
+
+head                        tail
+(1)   
+{'h'}  
+
+{'h'}
+'''
