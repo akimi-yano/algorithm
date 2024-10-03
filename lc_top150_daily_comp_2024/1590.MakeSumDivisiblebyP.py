@@ -51,6 +51,8 @@ class Solution:
      [0, 3, 4, 8, 10]
      [0, 3, 4, 2, 4]
         '''
+        # find sum(nums[i...j]) % p == sum(nums) % p 
+        # sum(nums[i...j]) % p == sum(nums[i]%p +nums[i+1]%p ...)
         remainder = sum(nums) % p
         if remainder == 0:
             return 0
@@ -60,10 +62,26 @@ class Solution:
         cur = 0
         prefixes = {cur: -1}
         for i, num in enumerate(nums):
+            # mod the running total and always keep it with 0~p range (even neg nums will be converted)
+            # we dont need to reset the cur as this prefix sum, so we subtract to find the range
             cur = (cur + num) % p
+            # print("cur", cur)
+            # looking for a target that allows to use the cur and make the remainder 0
+            # remainder - ((cur-target)%p) = 0
+            '''
+            remainder - (cur-target) = 0
+            remainder - cur + target = 0
+            target = cur - remainder
+
             target = (cur - remainder) % p
+            '''
+            target = (cur - remainder) % p
+            # print("target", target)
+            # print("prefixes", prefixes)
             if target in prefixes:
                 subarray_len = i - prefixes[target]
+                # print("subarray_len", subarray_len)
+                # by choosing the best one, we are choosing only 1 subarray
                 best = min(best, subarray_len)
             prefixes[cur] = i
         
