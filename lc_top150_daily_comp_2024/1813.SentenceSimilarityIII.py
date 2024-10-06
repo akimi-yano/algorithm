@@ -73,3 +73,22 @@ class Solution:
             if first == w2[:len(first)] and second == w2[-len(second):]:
                 return True
         return False
+
+# Slight optimization of code:
+
+class Solution:
+    def areSentencesSimilar(self, sentence1: str, sentence2: str) -> bool:
+        w1 = sentence1.split(' ')
+        w2 = sentence2.split(' ')
+        if len(w1) > len(w2):
+            w1, w2 = w2, w1
+
+        for i in range(0, len(w1)+1):
+            first = w1[:i]
+            second = w1[i:]
+            w2_first = w2[:len(first)]
+            w2_second = w2[-len(second):] if len(second) else []
+            # print(first, w2_first, second, w2_second)
+            if first == w2_first and second == w2_second:
+                return True
+        return False
