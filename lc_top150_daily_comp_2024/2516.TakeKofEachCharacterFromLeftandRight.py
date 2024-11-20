@@ -66,3 +66,22 @@ class Solution:
             if valid:
                 ans = min(ans, N-(right-left+1))
         return ans if valid else -1
+
+class Solution:
+    def takeCharacters(self, s: str, k: int) -> int:
+
+        limits = {c: s.count(c) - k for c in 'abc'}
+        if any(x < 0 for x in limits.values()):
+            return -1
+        
+        cur = {c: 0 for c in 'abc'}
+        ans = l = 0
+        for r, c in enumerate(s):
+            cur[c] += 1
+            # if the cur[c] <= limits[c], it means that we are using the ones that we cannot use for removing.
+            while cur[c] > limits[c]:
+                cur[s[l]] -= 1
+                l += 1
+            ans = max(ans, r - l + 1)
+        
+        return len(s) - ans
