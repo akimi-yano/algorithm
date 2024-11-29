@@ -50,7 +50,11 @@ grid[0][0] == 0
 import heapq
 class Solution:
     def minimumTime(self, grid: List[List[int]]) -> int:
+        # If we can not move to the neighboring cells from starting position we can not move anywhere in the matrix hence answer is -1.
+        # But if we can move to the neighboring cells from starting position, we can move anywhere in the matrix. 
+        # We can wait by playing "ping pong" between previous cell and current cell till a neighboring cell opens up.
         if grid[0][1] > 1 and grid[1][0] > 1: return -1
+
         minheap = []
         heapq.heappush(minheap, (grid[0][0], 0, 0))
         seen = set([])
@@ -68,5 +72,15 @@ class Solution:
             for row_d, col_d in ((0,1), (0,-1), (1,0), (-1,0)):
                 next_r, next_c = row + row_d, col + col_d
                 if (0<=next_r<ROW) and (0<=next_c<COL):
+                    # 偶数でたどり着くますと奇数でたどり着くマスが決まっている。
+                    # If time for a neighbor (target) cell is > 1 + time for current cell. 
+                    # We can not directly move to target cell. We will have to "ping pong" between previous cell and current cell. 
+                    # When playing ping pong between previous and current cell there can be two cases.
+                    # 1) Let's say time for target cell is 4 and current time is 2, difference = 2 (even).
+                    # Hence we reach target cell with time: target cell time + 1 when difference between target cell time and curr cell time is even.
+                    # 2) Let's say time for target cell is 5 and current time is 2, difference = 3 (odd).
+                    # Hence we reach target cell with time: target cell time when difference between target cell time and curr cell time is odd.
+                    # * This is because the difference between the cur and next should be always odd to be able to go. so add±1 if even
+                    # This "ping pong" is captured in the wait variable in the code
                     wait = 1 if (grid[next_r][next_c] - time) % 2 == 0 else 0
                     heapq.heappush(minheap, (max(time+1, grid[next_r][next_c]+wait), next_r, next_c))
