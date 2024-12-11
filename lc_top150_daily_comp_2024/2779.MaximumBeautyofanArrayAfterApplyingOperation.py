@@ -52,3 +52,19 @@ class Solution:
             right = bisect_right(nums, target + k)
             ans = max(ans, right - left)
         return ans
+
+class Solution:
+    def maximumBeauty(self, nums: List[int], k: int) -> int:
+        '''
+        +5   -5
+        [15, 25] k=5
+        -> [20, 20]
+        '''
+        nums.sort()
+        left = 0
+        for right in range(len(nums)):
+            # invalid case, so move left 
+            if nums[right] - nums[left] > k * 2:
+                left += 1
+        return right - left + 1
+       
