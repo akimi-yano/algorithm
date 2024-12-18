@@ -49,3 +49,25 @@ class Solution:
             else:
                 ans.append(prices[i])
         return ans
+    
+# Optimization:
+
+class Solution:
+    def finalPrices(self, prices: List[int]) -> List[int]:
+        '''
+        [8,4,6,2,3]
+        [4,2,4,2,3]
+
+        monoq = [ 2, 4, 8 ]
+        '''
+        monoq = []
+        for i in range(len(prices)-1, -1, -1):
+            price = prices[i]
+            while monoq and monoq[-1] > price:
+                monoq.pop()
+            if monoq:
+                prices[i] -= monoq[-1]
+                if monoq[-1] == price:
+                    monoq.pop()
+            monoq.append(price)
+        return prices
