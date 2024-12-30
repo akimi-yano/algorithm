@@ -71,5 +71,5 @@ class Solution:
             if target[j] in arr[i]:
                 ans += arr[i][target[j]] * helper(i+1, j+1)
             ans += helper(i+1, j)
-            return ans
-        return helper(0, 0) % Solution.MOD
+            return ans % Solution.MOD
+        return helper(0, 0)
