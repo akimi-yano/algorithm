@@ -86,4 +86,43 @@ class Solution:
         return ans1 and ans2
 
 
+# Cleaning the code a bit:
+
+class Solution:
+    def canBeValid(self, s: str, locked: str) -> bool:
+        if len(s) % 2:
+            return False
         
+        # from left to right
+        cur = 0
+        saver = 0
+        for i in range(len(s)):
+            if locked[i] == '0':
+                saver += 1
+            else:
+                if s[i] == '(':
+                    cur += 1
+                else:
+                    cur -= 1
+            if cur + saver < 0:
+                return False
+            
+        ans1 = cur <= saver
+
+        # from right to left
+        cur = 0
+        saver = 0
+        for i in range(len(s)-1,-1,-1):
+            if locked[i] == '0':
+                saver += 1
+            else:
+                if s[i] == ')':
+                    cur += 1
+                else:
+                    cur -= 1
+            if cur + saver < 0:
+                return False
+            
+        ans2 = cur <= saver
+
+        return ans1 and ans2
