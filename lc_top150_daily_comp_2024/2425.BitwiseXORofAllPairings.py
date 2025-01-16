@@ -52,3 +52,18 @@ class Solution:
                 ans ^= k
         return ans
 
+# Another way:
+
+class Solution:
+    def xorAllNums(self, nums1: List[int], nums2: List[int]) -> int:
+        N1 = len(nums1)
+        N2 = len(nums2)
+        n1 = 0
+        n2 = 0
+        for num1 in nums1:
+            n1 ^= num1
+        
+        for num2 in nums2:
+            n2 ^= num2
+        
+        return ((N2%2) * n1) ^ ((N1%2) * n2)
