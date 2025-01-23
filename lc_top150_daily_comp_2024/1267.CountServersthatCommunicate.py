@@ -68,3 +68,26 @@ class Solution:
                     ans.add(tup)
         
         return len(ans)
+
+# Another approach
+
+class Solution:
+    def countServers(self, grid: List[List[int]]) -> int:
+        ROW = len(grid)
+        COL = len(grid[0])
+        
+        comps_per_rows = Counter()
+        comps_per_cols = Counter()
+        points = []
+        for row in range(ROW):
+            for col in range(COL):
+                if grid[row][col]:
+                    points.append((row, col))
+                    comps_per_rows[row] += 1
+                    comps_per_cols[col] += 1
+
+        ans = 0
+        for row, col in points:
+            if comps_per_rows[row] > 1 or comps_per_cols[col] > 1:
+                ans += 1
+        return ans
