@@ -105,3 +105,13 @@ class Solution:
             return cur_score if len(graph[cur_node]) == 1 and cur_node != 0 else max(get_alices_max_score(next_node, cur_node, cur_score, time_stamp + 1) for next_node in graph[cur_node] if next_node != prev_node)
         
         return get_alices_max_score(0, -1, 0, 0)
+
+'''
+Notes:
+
+Bob's path is decided as there is no need to optimize for Bob. 
+Bob is just going to 0.
+Also since it is a tree, there only one way.
+
+So, process that first, and then check Alice.
+'''
