@@ -59,7 +59,7 @@ class Solution:
 
         # map 'aeiou' to be 0,1,2,3,4, respectively and consonants are mapped to 5
         word = list(map(lambda x: 'aeiou'.index(x) if x in 'aeiou' else 5, word))
-        print(word)
+        # print(word)
 
         char_cnt = [0, 0, 0, 0, 0, 0]
 
