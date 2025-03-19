@@ -59,6 +59,7 @@ class Solution:
                 nums[i+2] ^= 1 
                 operations += 1
         
+        # Ensure after processing that no elements in nums are zero and return operations
         if nums[N-2] == 1 and nums[N-1] == 1:
             return operations
         else:
