@@ -64,4 +64,4 @@ class Solution:
             return 0.25 * (helper(a - 4, b) + helper(a - 3, b - 1) + helper(a - 2, b - 2) + helper(a - 1, b - 3))
 
         n = math.ceil(n / 25.0)
-        return helper(n, n)
+        return helper(n, n)g
