@@ -117,3 +117,30 @@ class Solution:
                 i += 1
         
         return grid
+
+# Another approach - shorter code:
+
+class Solution:
+    def sortMatrix(self, grid: List[List[int]]) -> List[List[int]]:
+        '''
+        [0,2] : -2
+        [0,1], [1,2] : -1
+        [0,0], [1,1] : 0
+        [1,0], [2,1] : 1
+        [2,0] : 2
+        '''
+        diagonals = defaultdict(list)
+        N = len(grid)
+        
+        for row in range(N):
+            for col in range(N):
+                diagonals[row-col].append(grid[row][col])
+        
+        for k in diagonals:
+            diagonals[k].sort(reverse=(k<0)) # reverse it cuz i wanna pop later
+        
+        for row in range(N):
+            for col in range(N):
+                grid[row][col] = diagonals[row-col].pop()
+        
+        return grid
