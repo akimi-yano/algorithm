@@ -66,3 +66,25 @@ class Solution:
             c += 1
             
         return ''.join(ans)
+    
+# Another approach:
+
+class Solution:
+    def sortVowels(self, s: str) -> str:
+        s_list = list(s)
+        vowel_vals = []
+        VOWELS = set(['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U' ])
+
+        for i, elem in enumerate(s):
+            if elem in VOWELS:
+                vowel_vals.append(elem)
+        
+        vowel_vals.sort()
+
+        j = 0
+        for i in range(len(s_list)):
+            if s_list[i] in VOWELS:
+                s_list[i] = vowel_vals[j]
+                j += 1
+
+        return ''.join(s_list)
