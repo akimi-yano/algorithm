@@ -62,4 +62,4 @@ class Solution:
             total += presum[x] 
             ops = min(total-count[x], numOperations) # number of operations 
             ans = max(ans, count[x] + ops) 
-        return ans
+        return ans/.
