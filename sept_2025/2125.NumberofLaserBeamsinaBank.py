@@ -66,3 +66,15 @@ class Solution:
         for i in range(1, len(stack)):
             ans += stack[i-1] * stack[i]
         return ans
+
+# Optimization:
+
+class Solution:
+    def numberOfBeams(self, bank: List[str]) -> int:
+        ans = prev = 0
+        for row in bank:
+            num_one = row.count('1')
+            if num_one > 0:
+                ans += num_one * prev
+                prev = num_one
+        return ans
